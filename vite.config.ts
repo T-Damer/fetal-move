@@ -16,5 +16,5 @@ export default defineConfig({
     },
     outDir: 'dist',
   },
-  base: '/vac-calendar',
+  base: '/birth-history',
 })

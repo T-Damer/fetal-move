@@ -1,9 +1,7 @@
-# Frontend code for vaccination calendar app
+# Frontend code for birth helper app
 
 Overview:
 
-1. Store `FullName: BirthDate` key-pairs in localstorage
-2. When navigating to the `FullName` page (`/firstName-secondName`), extract the `BirthDate` and calculate the vaccination dates
 
 ## Local launch
 

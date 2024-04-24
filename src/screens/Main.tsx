@@ -14,7 +14,7 @@ export default function () {
 
   return (
     <div>
-      <h1>📆 Vaccination calendar</h1>
+      <h1>🍼 Birth history</h1>
       <label className="input input-bordered flex items-center gap-2 m-1">
         <input
           type="text"

@@ -5,7 +5,7 @@ import Main from 'screens/Main'
 export default function () {
   return (
     <div className="container mx-auto p-5 md:p-10 prose">
-      <Router base="/vac-calendar">
+      <Router base="/birth-history">
         <Switch>
           <Route
             path="/patient/:name"
