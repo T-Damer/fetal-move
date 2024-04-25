@@ -5,7 +5,7 @@ import CreatePatientCard from 'components/CreatePatientCard'
 import CrossIcon from 'components/CrossIcon'
 import PatientCard from 'components/PatientCard'
 import SearchIcon from 'components/SearchIcon'
-import nameToBirthDateStorage from 'atoms/nameToBirthDateStorage'
+import nameToBirthDateStorage from 'atoms/nameToDataStore'
 
 export default function () {
   const patients = useAtomValue(nameToBirthDateStorage)
@@ -29,10 +29,14 @@ export default function () {
         <CreatePatientCard />
         {Object.entries(patients)
           .reverse()
-          .map(([name, birthDate], index) => {
+          .map(([name, data], index) => {
             if (!search || name.toLowerCase().includes(search.toLowerCase()))
               return (
-                <PatientCard name={name} birthDate={birthDate} key={index} />
+                <PatientCard
+                  name={name}
+                  birthDate={data['Birth Date']}
+                  key={index}
+                />
               )
           })}
       </div>

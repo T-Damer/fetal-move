@@ -1,16 +1,14 @@
 import { navigate } from 'wouter-preact/use-browser-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
-import nameToBirthDateStorage from 'atoms/nameToBirthDateStorage'
+import nameToDataStore from 'atoms/nameToDataStore'
 
 export default function ({ name }: { name: string }) {
-  const [patientsData, setPatientsData] = useAtom(nameToBirthDateStorage)
-  const birthDate = patientsData[name]
-
-  const birth = new Date(birthDate)
+  const [patientsData, setPatientsData] = useAtom(nameToDataStore)
+  const currentPatient = patientsData[name]
 
   const deleteEntry = useCallback(() => {
-    if (!patientsData[name]) {
+    if (!currentPatient) {
       console.error('cant find the patient while deleting')
       return
     }
@@ -19,7 +17,7 @@ export default function ({ name }: { name: string }) {
 
     navigate('/birth-history')
     setPatientsData(patientsData)
-  }, [name, patientsData, setPatientsData])
+  }, [currentPatient, name, patientsData, setPatientsData])
 
   return (
     <div className="flex flex-col gap-x-2">
@@ -35,8 +33,11 @@ export default function ({ name }: { name: string }) {
           Delete
         </a>
       </div>
-      <span>Name: {name}</span>
-      <span>Birth date: {birth.toLocaleDateString()}</span>
+      {Object.entries(currentPatient).map(([entryName, data]) => (
+        <span>
+          {entryName}: {data}
+        </span>
+      ))}
     </div>
   )
 }

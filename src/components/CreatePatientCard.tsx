@@ -3,13 +3,13 @@ import { useCallback, useMemo, useRef, useState } from 'preact/hooks'
 import CalendarIcon from 'components/CalendarIcon'
 import Card from 'components/Card'
 import HumanIcon from 'components/HumanIcon'
-import nameToBirthDateStorage from 'atoms/nameToBirthDateStorage'
+import nameToDataStore from 'atoms/nameToDataStore'
 
 function AddPatientForm() {
   const dateInputRef = useRef<HTMLInputElement | null>(null)
   const [fullName, setFullName] = useState('')
   const [birthDate, setBirthDate] = useState('')
-  const [patientsData, setPatientsData] = useAtom(nameToBirthDateStorage)
+  const [patientsData, setPatientsData] = useAtom(nameToDataStore)
 
   const clearData = useCallback(() => {
     setFullName('')
@@ -26,7 +26,10 @@ function AddPatientForm() {
 
     setPatientsData((prevData) => ({
       ...prevData,
-      [fullName]: Number(new Date(birthDate)),
+      [fullName]: {
+        'Birth Date': Number(new Date(birthDate)),
+        id: crypto.randomUUID(),
+      },
     }))
     clearData()
   }, [fullName, birthDate, patientsData, setPatientsData, clearData])
