@@ -1,11 +1,15 @@
 import { navigate } from 'wouter-preact/use-browser-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
-import nameToDataStore from 'atoms/nameToDataStore'
+import patientsDataStore, {
+  AvailableInputKeys,
+  AvailableSections,
+  PlainInputObject,
+} from 'atoms/patientsDataStore'
 
-export default function ({ name }: { name: string }) {
-  const [patientsData, setPatientsData] = useAtom(nameToDataStore)
-  const currentPatient = patientsData[name]
+export default function ({ id }: { id: string }) {
+  const [patientsData, setPatientsData] = useAtom(patientsDataStore)
+  const currentPatient = patientsData[id]
 
   const deleteEntry = useCallback(() => {
     if (!currentPatient) {
@@ -13,11 +17,44 @@ export default function ({ name }: { name: string }) {
       return
     }
 
-    delete patientsData[name]
+    delete patientsData[id]
 
     navigate('/birth-history')
     setPatientsData(patientsData)
-  }, [currentPatient, name, patientsData, setPatientsData])
+  }, [currentPatient, id, patientsData, setPatientsData])
+
+  const onChange = useCallback(
+    ({
+      value,
+      headerId,
+      inputKey,
+    }: {
+      value: string
+      headerId: string
+      inputKey: string
+    }) => {
+      const subHeaderData = currentPatient[headerId as AvailableSections]
+
+      const updated = {
+        ...currentPatient,
+        [headerId]: {
+          ...subHeaderData,
+          [inputKey]: {
+            ...(subHeaderData[inputKey as AvailableInputKeys] as object), // TS complains if you don't convert
+            value,
+          },
+        },
+      }
+
+      setPatientsData((prev) => ({
+        ...prev,
+        [id]: updated,
+      }))
+    },
+    [currentPatient, id, setPatientsData]
+  )
+
+  if (!currentPatient) return <p>404 :(</p>
 
   return (
     <div className="flex flex-col gap-x-2">
@@ -26,17 +63,43 @@ export default function ({ name }: { name: string }) {
           onClick={() => navigate('/birth-history')}
           className="cursor-pointer hover:opacity-50 transition-opacity"
         >
-          ◄ Go back
+          ◄ Назад
         </a>
 
         <a className="text-red-400 cursor-pointer" onClick={deleteEntry}>
-          Delete
+          Удалить
         </a>
       </div>
-      {Object.entries(currentPatient).map(([entryName, data]) => (
-        <span>
-          {entryName}: {data}
-        </span>
+
+      {Object.entries(currentPatient).map(([headerId, data]) => (
+        <>
+          <h2 id={headerId}>{data.header}</h2>
+          {Object.entries(data).map(([inputKey, inputValue]) => {
+            const input = inputValue as PlainInputObject
+
+            if (!input?.title) return null
+
+            const value = input.preprocess?.(input.value) || input.value
+
+            return (
+              <span>
+                {input.title}:{' '}
+                <input
+                  value={value}
+                  onChange={(e) =>
+                    onChange({
+                      value: e.currentTarget.value,
+                      headerId,
+                      inputKey,
+                    })
+                  }
+                >
+                  {value}
+                </input>
+              </span>
+            )
+          })}
+        </>
       ))}
     </div>
   )

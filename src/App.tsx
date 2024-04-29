@@ -8,8 +8,10 @@ export default function () {
       <Router base="/birth-history">
         <Switch>
           <Route
-            path="/patient/:name"
-            component={({ params }) => <DetailsPage {...params} />}
+            path="/patient/:id"
+            component={({ params }: { params: { id: string } }) => (
+              <DetailsPage {...params} />
+            )}
           />
           <Route component={Main} />
         </Switch>

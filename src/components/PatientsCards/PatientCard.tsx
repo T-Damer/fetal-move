@@ -1,18 +1,24 @@
 import { navigate } from 'wouter-preact/use-browser-location'
 import { useCallback } from 'preact/hooks'
 import Card from 'components/Card'
-import PatientData from 'types/PatientData'
 
-export default function ({ name, birthDate }: PatientData) {
+export default function ({
+  id,
+  historySerial,
+}: {
+  id: string
+  historySerial: number
+}) {
   const onPress = useCallback(() => {
-    navigate(`/birth-history/patient/${name}`)
-  }, [name])
+    navigate(`/birth-history/patient/${id}`)
+  }, [id])
 
   return (
     <Card onPress={onPress}>
       <div className="flex flex-col justify-center">
-        <span className="font-bold truncate-2 leading-snug">{name}</span>
-        <span>{new Date(birthDate).toLocaleDateString()}</span>
+        <span className="font-bold truncate-2 leading-snug">
+          {historySerial}
+        </span>
       </div>
     </Card>
   )
