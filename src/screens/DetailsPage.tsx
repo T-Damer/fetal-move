@@ -60,13 +60,20 @@ export default function ({ id }: { id: string }) {
     saveObjectAsJson('person.csv', currentPatient)
   }, [currentPatient])
 
-  if (!currentPatient) return <p>404 :(</p>
+  const goBack = useCallback(() => navigate('/birth-history'), [])
+
+  if (!currentPatient)
+    return (
+      <a className="text-4xl underline cursor-pointer" onClick={goBack}>
+        ◄ Пациент не найден
+      </a>
+    )
 
   return (
     <div className="flex flex-col gap-x-2">
       <div className="flex justify-between items-center">
         <a
-          onClick={() => navigate('/birth-history')}
+          onClick={goBack}
           className="cursor-pointer hover:opacity-50 transition-opacity"
         >
           ◄ Назад
