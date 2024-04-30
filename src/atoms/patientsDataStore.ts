@@ -9,6 +9,11 @@ export type PlainInputObject = {
   preprocess?: DatePreprocess
 }
 
+export type CommonContent = {
+  value: number | string
+  preprocess?: DatePreprocess
+  title: string
+}
 type Header = { header: string }
 type PassportData = {
   historySerial: { value: number; title: string }

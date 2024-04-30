@@ -1,11 +1,13 @@
 import { navigate } from 'wouter-preact/use-browser-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
+import Button from 'components/Button'
 import patientsDataStore, {
   AvailableInputKeys,
   AvailableSections,
   PlainInputObject,
 } from 'atoms/patientsDataStore'
+import saveObjectAsJson from 'helpers/saveObjectAsJson'
 
 export default function ({ id }: { id: string }) {
   const [patientsData, setPatientsData] = useAtom(patientsDataStore)
@@ -54,6 +56,10 @@ export default function ({ id }: { id: string }) {
     [currentPatient, id, setPatientsData]
   )
 
+  const saveAndExport = useCallback(() => {
+    saveObjectAsJson('person.csv', currentPatient)
+  }, [currentPatient])
+
   if (!currentPatient) return <p>404 :(</p>
 
   return (
@@ -101,6 +107,10 @@ export default function ({ id }: { id: string }) {
           })}
         </>
       ))}
+
+      <Button isGreen onSubmit={saveAndExport}>
+        Поделиться
+      </Button>
     </div>
   )
 }
