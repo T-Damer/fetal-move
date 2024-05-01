@@ -53,7 +53,7 @@ export default function ({ id }: { id: string }) {
 
   const saveAndExport = useCallback(() => {
     saveObjectAsJson(
-      `ИР-${currentPatient.passport.historySerial}.csv`,
+      `ИР-${currentPatient.passport.historySerial.value}.csv`,
       currentPatient
     )
   }, [currentPatient])
