@@ -17,12 +17,12 @@ function constructCsv(dataObjToWrite: Patient) {
   Object.keys(dataObjToWrite).forEach((headerId) => {
     Object.values(dataObjToWrite[headerId as AvailableInputKeys]).forEach(
       (data) => {
-        const { title, value, preprocess } = data as CommonContent
+        const { title, value } = data as CommonContent
         if (!title) return
         const safeValue = value || '-'
 
         titles.push(title)
-        values.push(String(preprocess?.(safeValue) || safeValue))
+        values.push(String(safeValue))
       }
     )
   })

@@ -1,5 +1,7 @@
+import { PlainValue } from 'atoms/patientsDataStore'
+
 export default interface OnInputChangeProps {
-  value: string | number | Date | null | undefined
+  value: PlainValue
   headerId: string
   inputKey: string
 }

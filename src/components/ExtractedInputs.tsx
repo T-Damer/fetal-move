@@ -11,15 +11,13 @@ interface ExtractedInputsProps {
 function ProcessedInput({
   input,
   onChange,
-  inputType,
 }: {
   input: CommonContent
   onChange: OnChange
-  inputType: 'date' | 'string' | 'number'
 }) {
-  const value = input.preprocess?.(input.value) || input.value
+  const { options, value, type } = input
 
-  if ('options' in input)
+  if (options)
     return (
       <select
         class="select select-bordered select-xs "
@@ -28,20 +26,19 @@ function ProcessedInput({
           onChange({ currentTarget: { value: e.currentTarget.value } })
         }
       >
-        {input.options.map((option) => (
+        {options.map((option) => (
           <option value={option}>{option}</option>
         ))}
       </select>
     )
 
-  if (inputType === 'date')
-    return <DateInput value={value} onChange={onChange} />
+  if (type === 'date') return <DateInput value={value} onChange={onChange} />
 
   return (
     <input
-      value={input.preprocess ? String(new Date()) : value}
+      value={value}
       min="0"
-      type={inputType}
+      type={type}
       onChange={onChange}
       placeholder={input.placeholder || '---'}
       className={`placeholder-gray-300 border-b-gray-300 w-full border-b-2 border-dotted`}
@@ -61,12 +58,7 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
         const input = inputValue as CommonContent
 
         if (!input?.title) return null
-
-        const inputType = input.preprocess
-          ? 'date'
-          : typeof input.value === 'number'
-            ? 'number'
-            : 'string'
+        const { type } = input
 
         return (
           <label class="form-control w-full my-2">
@@ -76,16 +68,15 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
               onChange={({ currentTarget }) =>
                 onChange({
                   value:
-                    inputType === 'date'
-                      ? currentTarget.valueAsDate
-                      : inputType === 'number'
+                    type === 'date'
+                      ? currentTarget.value
+                      : type === 'number'
                         ? currentTarget.valueAsNumber
                         : currentTarget.value,
                   headerId,
                   inputKey,
                 })
               }
-              inputType={inputType}
             />
           </label>
         )

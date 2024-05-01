@@ -58,7 +58,6 @@ export default function ({ id }: { id: string }) {
     )
   }, [currentPatient])
 
-  console.log(currentPatient)
   if (!currentPatient) return <NotFound />
 
   return (
