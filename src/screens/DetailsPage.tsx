@@ -52,9 +52,13 @@ export default function ({ id }: { id: string }) {
   )
 
   const saveAndExport = useCallback(() => {
-    saveObjectAsJson('person.csv', currentPatient)
+    saveObjectAsJson(
+      `ИР-${currentPatient.passport.historySerial}.csv`,
+      currentPatient
+    )
   }, [currentPatient])
 
+  console.log(currentPatient)
   if (!currentPatient) return <NotFound />
 
   return (
