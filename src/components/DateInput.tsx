@@ -1,18 +1,24 @@
-import { useRef, useState } from 'preact/hooks'
+import { OnChange } from 'types/FormEvent'
+import { useRef } from 'preact/hooks'
 import CalendarIcon from 'components/Icons/CalendarIcon'
 
-export default function () {
+export default function ({
+  value,
+  onChange,
+}: {
+  value: string | number | undefined
+  onChange: OnChange
+}) {
   const dateInputRef = useRef<HTMLInputElement | null>(null)
-  const [birthDate, setBirthDate] = useState('')
 
   return (
     <label className="input input-bordered flex items-center gap-2">
       <input
         className="grow"
-        value={birthDate}
-        onChange={(e) => setBirthDate(e.currentTarget.value)}
+        value={value}
+        onChange={onChange}
         type="date"
-        placeholder="Birth Date"
+        placeholder="введите дату"
         ref={dateInputRef}
         required
       />

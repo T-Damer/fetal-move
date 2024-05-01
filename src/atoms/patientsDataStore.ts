@@ -1,40 +1,57 @@
 import { atomWithStorage } from 'jotai/utils'
 
-type DatePreprocess = (someDate: number | string) => string
-const datePreprocess = (someDate: number | string) => String(new Date(someDate))
+const options = [0, 1]
 
-export type PlainInputObject = {
-  value: number | string
-  title: string
-  preprocess?: DatePreprocess
-}
+type PlainValue = number | string | undefined
+type DatePreprocess = (someDate: PlainValue) => string | undefined
+const datePreprocess = (someDate: PlainValue) =>
+  someDate ? String(new Date(someDate)) : undefined
 
-export type CommonContent = {
-  value: number | string
-  preprocess?: DatePreprocess
+type InputObject = {
+  value: PlainValue
   title: string
+  placeholder?: string
+  fullWidth?: boolean
 }
+type Preprocess = { preprocess: DatePreprocess }
+type NumberOptions = { options: number[] }
+
+export type CommonContent = InputObject & Partial<NumberOptions & Preprocess>
+
 type Header = { header: string }
 type PassportData = {
   historySerial: { value: number; title: string }
-  receiptDate?: {
-    value: number
-    preprocess: DatePreprocess
-    title: string
-  }
-  dischargeDate?: {
-    value: number
-    preprocess: DatePreprocess
-    title: string
-  }
+  receiptDate: InputObject & Preprocess
+  dischargeDate: InputObject & Preprocess
+  admissionDiagnosis: InputObject
+  dateClinicalDiagnosis1: InputObject & Preprocess
+  clinicalDiagnosis1: InputObject
+  dateClinicalDiagnosis2: InputObject & Preprocess
+  clinicalDiagnosis2: InputObject
+  dateFinalDiagnosis: InputObject & Preprocess
+  finalDiagnosis: InputObject
+  age: InputObject
+  bloodType: InputObject & NumberOptions
+  Rh: InputObject & NumberOptions
+  height: InputObject
+  worksAt: InputObject
+  livingConditions: InputObject & NumberOptions
+  badHabits: InputObject & NumberOptions
+  drugs: InputObject & NumberOptions
+  address: InputObject
+  complicatedSomaticHistory: InputObject
+  complicatedGynecologyHistory: InputObject
+  complicatedObstetricsHistory: InputObject & NumberOptions
+  allergy: InputObject & NumberOptions
+  genetics: InputObject & NumberOptions
 }
 type GynecologyData = {
-  mensesFrom: { value: number; title: string }
-  lastMenses: { value: number; title: string }
-  sexFrom: { value: number; title: string }
+  mensesFrom: InputObject
+  lastMenses: InputObject & Preprocess
+  sexFrom: InputObject
 }
 type ObstetricData = {
-  numberOfPregnancies: { value: number; title: string }
+  numberOfPregnancies: InputObject
 }
 
 export type AvailableInputKeys = keyof PassportData &
@@ -73,12 +90,123 @@ export class Patient {
         preprocess: datePreprocess,
         title: 'Дата выписки',
       },
+      admissionDiagnosis: {
+        value: '',
+        title: 'Диагноз при поступлении',
+        placeholder: 'Б 30-31 нед, гес. ХВГП. Дифф.токс.зоб',
+      },
+      dateClinicalDiagnosis1: {
+        value: 0,
+        preprocess: datePreprocess,
+        title: 'Дата первого клинического диагноза',
+      },
+      clinicalDiagnosis1: {
+        value: '',
+        title: 'Первый клинический дагноз',
+        placeholder:
+          'Б 30-31 нед, гес. ХВГП. ОСА (хр.пиелонеф) Дифф.токс.зоб.ОГА (НМЦ,эндометриоз)',
+      },
+      dateClinicalDiagnosis2: {
+        value: 0,
+        preprocess: datePreprocess,
+        title: 'Дата второго клинического диагноза',
+      },
+      clinicalDiagnosis2: {
+        value: '',
+        title: 'Второй клинический диагноз',
+        placeholder:
+          'Роды 2,срочные,патологические.рубцовая деформация ш/м ХФПН.ХВГП.Гестоз(о),ср.ст.тяж',
+      },
+      dateFinalDiagnosis: {
+        value: 0,
+        preprocess: datePreprocess,
+        title: 'Дата заключительного диагноза',
+      },
+      finalDiagnosis: {
+        value: '',
+        title: 'Заключительный диагноз',
+        placeholder:
+          'Р1,преждев,31 нед,пат, путем кес.сеч., гес. ХВГП. Дифф.токс.зоб',
+      },
+      age: {
+        value: 0,
+        title: 'Возраст',
+      },
+      bloodType: {
+        value: 1,
+        options: [1, 2, 3, 4],
+        title: 'Группа крови',
+      },
+      Rh: {
+        value: 0,
+        options,
+        title: 'Резус фактор',
+      },
+      height: {
+        value: 0,
+        title: 'Рост',
+      },
+      worksAt: {
+        value: '',
+        title: 'Работа',
+        placeholder: 'преподаватель',
+      },
+      livingConditions: {
+        value: 0,
+        options,
+        title: 'Социально-бытовые условия',
+      },
+      badHabits: {
+        value: 0,
+        options,
+        title: 'Вредные привычки',
+      },
+      drugs: {
+        value: 0,
+        options,
+        title: 'Лекарства',
+      },
+      address: {
+        value: '',
+        title: 'Адрес',
+        placeholder: 'Воронеж, Коминтер. р-он. ул. Победы д.0. кв. 0',
+      },
+      complicatedSomaticHistory: {
+        value: '',
+        placeholder:
+          'ОРВИ, грипп, ангины, 1977-операция на баталловом протоке, хр.гастрит',
+        title: 'Отягощенный Соматический Анамнез (ОСА)',
+      },
+      complicatedGynecologyHistory: {
+        value: '',
+        placeholder: 'эрозия шейки матки',
+        title: 'Отягощенный Гинекологический Анамнез (ОГА)',
+      },
+      complicatedObstetricsHistory: {
+        value: 0,
+        options,
+        title: 'Отягощенный Акушерский Анамнез (ОАА)',
+      },
+      allergy: {
+        value: 0,
+        options,
+        title: 'Аллергологический анамнез',
+      },
+      genetics: {
+        value: 0,
+        options,
+        title: 'Генетические заболевания в семье',
+      },
     }
 
     this.gynecology = {
       header: 'Гинекологический анамнез',
-      mensesFrom: { value: 0, title: 'Менструации с' },
-      lastMenses: { value: 0, title: 'Дата последней менструации' },
+      mensesFrom: { value: 0, title: 'Менструации с (лет)' },
+      lastMenses: {
+        value: 0,
+        preprocess: datePreprocess,
+        title: 'Дата последней менструации',
+      },
       sexFrom: { value: 0, title: 'Половая жизнь с (лет)' },
     }
     this.obstetric = {

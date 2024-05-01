@@ -2,10 +2,13 @@ import { navigate } from 'wouter-preact/use-browser-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
 import Button from 'components/Button'
+import DetailsHeader from 'components/DetailsHeader'
+import ExtractedInputs from 'components/ExtractedInputs'
+import NotFound from 'components/NotFound'
+import OnInputChangeProps from 'types/OnInputChangeProps'
 import patientsDataStore, {
   AvailableInputKeys,
   AvailableSections,
-  PlainInputObject,
 } from 'atoms/patientsDataStore'
 import saveObjectAsJson from 'helpers/saveObjectAsJson'
 
@@ -26,15 +29,7 @@ export default function ({ id }: { id: string }) {
   }, [currentPatient, id, patientsData, setPatientsData])
 
   const onChange = useCallback(
-    ({
-      value,
-      headerId,
-      inputKey,
-    }: {
-      value: string
-      headerId: string
-      inputKey: string
-    }) => {
+    ({ value, headerId, inputKey }: OnInputChangeProps) => {
       const subHeaderData = currentPatient[headerId as AvailableSections]
 
       const updated = {
@@ -60,60 +55,13 @@ export default function ({ id }: { id: string }) {
     saveObjectAsJson('person.csv', currentPatient)
   }, [currentPatient])
 
-  const goBack = useCallback(() => navigate('/birth-history'), [])
-
-  if (!currentPatient)
-    return (
-      <a className="text-4xl underline cursor-pointer" onClick={goBack}>
-        ◄ Пациент не найден
-      </a>
-    )
+  if (!currentPatient) return <NotFound />
 
   return (
     <div className="flex flex-col gap-x-2">
-      <div className="flex justify-between items-center">
-        <a
-          onClick={goBack}
-          className="cursor-pointer hover:opacity-50 transition-opacity"
-        >
-          ◄ Назад
-        </a>
+      <DetailsHeader deleteEntry={deleteEntry} />
 
-        <a className="text-red-400 cursor-pointer" onClick={deleteEntry}>
-          Удалить
-        </a>
-      </div>
-
-      {Object.entries(currentPatient).map(([headerId, data]) => (
-        <>
-          <h2 id={headerId}>{data.header}</h2>
-          {Object.entries(data).map(([inputKey, inputValue]) => {
-            const input = inputValue as PlainInputObject
-
-            if (!input?.title) return null
-
-            const value = input.preprocess?.(input.value) || input.value
-
-            return (
-              <span>
-                {input.title}:{' '}
-                <input
-                  value={value}
-                  onChange={(e) =>
-                    onChange({
-                      value: e.currentTarget.value,
-                      headerId,
-                      inputKey,
-                    })
-                  }
-                >
-                  {value}
-                </input>
-              </span>
-            )
-          })}
-        </>
-      ))}
+      <ExtractedInputs currentPatient={currentPatient} onChange={onChange} />
 
       <Button isGreen onSubmit={saveAndExport}>
         Поделиться
