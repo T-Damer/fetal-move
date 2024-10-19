@@ -1,3 +1,3 @@
-import { navigate } from 'wouter-preact/use-browser-location'
+import { navigate } from 'wouter-preact/use-hash-location'
 
-export default () => navigate('/birth-history')
+export default () => navigate('/')

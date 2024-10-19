@@ -1,5 +1,5 @@
-import { navigate } from 'wouter-preact/use-browser-location'
 import { useCallback } from 'preact/hooks'
+import { useHashLocation } from 'wouter-preact/use-hash-location'
 import Card from 'components/Card'
 
 export default function ({
@@ -9,9 +9,11 @@ export default function ({
   id: string
   historySerial: number
 }) {
+  const [, setLocation] = useHashLocation()
+
   const onPress = useCallback(() => {
-    navigate(`/birth-history/patient/${id}`)
-  }, [id])
+    setLocation(`/patient/${id}`)
+  }, [id, setLocation])
 
   return (
     <Card onPress={onPress}>

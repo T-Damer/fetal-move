@@ -16,9 +16,9 @@ export default function ({
       <input
         className="grow"
         value={value}
-        onChange={onChange}
+        onInput={onChange}
         type="date"
-        placeholder="введите дату"
+        placeholder="Введите дату"
         ref={dateInputRef}
         required
       />

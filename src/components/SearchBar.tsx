@@ -15,7 +15,7 @@ export default function ({
         className="grow"
         placeholder="Поиск по номеру истории"
         value={search}
-        onChange={(e) => setSearch(e.currentTarget.value)}
+        onInput={(e) => setSearch(e.currentTarget.value)}
       />
       {search ? <CrossIcon onPress={() => setSearch('')} /> : <SearchIcon />}
     </label>

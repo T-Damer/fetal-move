@@ -1,11 +1,12 @@
 import { Route, Router, Switch } from 'wouter-preact'
+import { useHashLocation } from 'wouter-preact/use-hash-location'
 import DetailsPage from 'screens/DetailsPage'
 import Main from 'screens/Main'
 
 export default function () {
   return (
     <div className="container mx-auto p-5 md:p-10 prose">
-      <Router base="/birth-history">
+      <Router hook={useHashLocation}>
         <Switch>
           <Route
             path="/patient/:id"

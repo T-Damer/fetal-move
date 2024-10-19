@@ -1,4 +1,4 @@
-import { navigate } from 'wouter-preact/use-browser-location'
+import { navigate } from 'wouter-preact/use-hash-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
 import Button from 'components/Button'
@@ -6,6 +6,7 @@ import DetailsHeader from 'components/DetailsHeader'
 import ExtractedInputs from 'components/ExtractedInputs'
 import NotFound from 'components/NotFound'
 import OnInputChangeProps from 'types/OnInputChangeProps'
+import handleError from 'helpers/handleError'
 import patientsDataStore, {
   AvailableInputKeys,
   AvailableSections,
@@ -18,7 +19,8 @@ export default function ({ id }: { id: string }) {
 
   const deleteEntry = useCallback(() => {
     if (!currentPatient) {
-      console.error('cant find the patient while deleting')
+      const e = 'Не получилось найти пациента при удалении :('
+      handleError({ e, toastMessage: e })
       return
     }
 

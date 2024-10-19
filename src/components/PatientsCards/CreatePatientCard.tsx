@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from 'preact/hooks'
 import Button from 'components/Button'
 import Card from 'components/Card'
 import HumanIcon from 'components/Icons/HumanIcon'
+import handleError from 'helpers/handleError'
 import nameToDataStore, { Patient } from 'atoms/patientsDataStore'
 
 function AddPatientForm() {
@@ -15,7 +16,8 @@ function AddPatientForm() {
 
   const onSubmit = useCallback(() => {
     if (!historySerial) {
-      console.error('No history serial')
+      const e = 'Нет серийного номера истории'
+      handleError({ e, toastMessage: e })
       return
     }
 
@@ -47,7 +49,7 @@ function AddPatientForm() {
           step="1"
           placeholder="№ Истории"
           className="grow"
-          onChange={(e) => setHistorySerial(e.currentTarget.valueAsNumber)}
+          onInput={(e) => setHistorySerial(e.currentTarget.valueAsNumber)}
           value={historySerial || ''}
           required
         />

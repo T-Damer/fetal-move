@@ -39,7 +39,7 @@ function ProcessedInput({
       value={value}
       min="0"
       type={type}
-      onChange={onChange}
+      onInput={onChange}
       placeholder={input.placeholder || '---'}
       className={`placeholder-gray-300 border-b-gray-300 w-full border-b-2 border-dotted`}
     >
