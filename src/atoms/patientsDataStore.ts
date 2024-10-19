@@ -13,9 +13,9 @@ type InputObject = {
   placeholder?: string
   type?: InputType
 }
-type NumberOptions = { options: number[] }
+type NumStrOptions = { options: number[] | string[] }
 
-export type CommonContent = InputObject & Partial<NumberOptions>
+export type CommonContent = InputObject & Partial<NumStrOptions>
 
 type Header = { header: string }
 type PassportData = {
@@ -30,38 +30,64 @@ type PassportData = {
   dateFinalDiagnosis: InputObject
   finalDiagnosis: InputObject
   age: InputObject
-  bloodType: InputObject & NumberOptions
-  Rh: InputObject & NumberOptions
+  bloodType: InputObject & NumStrOptions
+  Rh: InputObject & NumStrOptions
   height: InputObject
+  weight: InputObject
   worksAt: InputObject
-  livingConditions: InputObject & NumberOptions
-  badHabits: InputObject & NumberOptions
-  drugs: InputObject & NumberOptions
+  livingConditions: InputObject & NumStrOptions
+  badHabits: InputObject & NumStrOptions
+  drugs: InputObject & NumStrOptions
   address: InputObject
   complicatedSomaticHistory: InputObject
   complicatedGynecologyHistory: InputObject
-  complicatedObstetricsHistory: InputObject & NumberOptions
-  allergy: InputObject & NumberOptions
-  genetics: InputObject & NumberOptions
+  complicatedObstetricsHistory: InputObject
+  allergy: InputObject
+  genetics: InputObject
 }
 type GynecologyData = {
   mensesFrom: InputObject
-  lastMenses: InputObject
+  mensesTo: InputObject
+  mensesThrough: InputObject
+  mensesRegularity: InputObject & NumStrOptions
+  mensesHurt: InputObject & NumStrOptions
+  mensesCharacteristics: InputObject
+  mensesLast: InputObject
+
   sexFrom: InputObject
+  aborts: InputObject
+  miscarriage: InputObject
+  gynecologicalDiseases: InputObject
+  sexTransmittedDiseases: InputObject
 }
 type ObstetricData = {
   numberOfPregnancies: InputObject
+  pregnanciesCharacteristics: InputObject
+}
+type PregnancyData = {
+  preterm: InputObject
+  totalGain: InputObject
+  abdominalCircumference: InputObject
+  uterinFundusHeight: InputObject
+  estimatedFetalWeight: InputObject
+  Dsp: InputObject
+  Dcr: InputObject
+  Dtr: InputObject
+  Conext: InputObject
+  firstHalf: InputObject
+  secondHalf: InputObject
 }
 
 export type AvailableInputKeys = keyof PassportData &
   keyof GynecologyData &
-  keyof ObstetricData
+  keyof ObstetricData &
+  keyof PregnancyData
 
 export class Patient {
   passport: Header & PassportData
   gynecology: Header & GynecologyData
   obstetric: Header & ObstetricData
-  pregnancy: Header
+  pregnancy: Header & PregnancyData
   birth: Header
   birthAnomalies: Header
   afterbirth: Header
@@ -128,21 +154,25 @@ export class Patient {
       },
       bloodType: {
         type: 'number',
-        options: [1, 2, 3, 4],
+        options: ['O (I)', 'A (II)', 'B (III)', 'AB (IV)'],
         title: 'Группа крови',
       },
       Rh: {
-        type: 'number',
-        options,
+        type: 'string',
+        options: ['(+)', '(-)'],
         title: 'Резус фактор',
       },
       height: {
         type: 'number',
         title: 'Рост',
       },
+      weight: {
+        type: 'number',
+        title: 'Вес',
+      },
       worksAt: {
         title: 'Работа',
-        placeholder: 'преподаватель',
+        placeholder: 'Преподаватель',
       },
       livingConditions: {
         type: 'number',
@@ -174,17 +204,14 @@ export class Patient {
       },
       complicatedObstetricsHistory: {
         type: 'number',
-        options,
         title: 'Отягощенный Акушерский Анамнез (ОАА)',
       },
       allergy: {
         type: 'number',
-        options,
         title: 'Аллергологический анамнез',
       },
       genetics: {
         type: 'number',
-        options,
         title: 'Генетические заболевания в семье',
       },
     }
@@ -192,11 +219,38 @@ export class Patient {
     this.gynecology = {
       header: 'Гинекологический анамнез',
       mensesFrom: { type: 'number', title: 'Менструации с (лет)' },
-      lastMenses: {
+      mensesTo: { type: 'number', title: 'По дней' },
+      mensesThrough: {
+        type: 'number',
+        title: 'Через',
+      },
+      mensesRegularity: {
+        type: 'string',
+        title: 'Регулярность',
+        options: ['Регулярные', 'Нерегулярные'],
+      },
+      mensesHurt: {
+        type: 'string',
+        title: 'Болезненность',
+        options: ['Безболезненные', 'Болезненные'],
+      },
+      mensesCharacteristics: {
+        type: 'string',
+        title: 'Особенности',
+      },
+      mensesLast: {
         type: 'date',
         title: 'Дата последней менструации',
       },
+
       sexFrom: { type: 'number', title: 'Половая жизнь с (лет)' },
+      aborts: { type: 'string', title: 'Аборты' },
+      miscarriage: { type: 'string', title: 'Выкидыши' },
+      gynecologicalDiseases: {
+        type: 'string',
+        title: 'Гинекологические заболевания',
+      },
+      sexTransmittedDiseases: { type: 'string', title: 'ЗППП' },
     }
     this.obstetric = {
       header: 'Акушерский анамнез',
@@ -204,8 +258,40 @@ export class Patient {
         type: 'number',
         title: 'Количество беременностей',
       },
+      pregnanciesCharacteristics: { type: 'string', title: 'Характеристика' },
     }
-    this.pregnancy = { header: 'Настоящая беременность' }
+    this.pregnancy = {
+      header: 'Настоящая беременность',
+      preterm: { type: 'number', title: 'Срок перед родами' },
+      totalGain: { type: 'number', title: 'Общая прибавка (кг)' },
+      abdominalCircumference: {
+        type: 'number',
+        title: 'Окружность живота (ОЖ) (см)',
+      },
+      uterinFundusHeight: {
+        type: 'number',
+        title: 'Высота дна матки (ВДМ) (см)',
+      },
+      estimatedFetalWeight: {
+        type: 'number',
+        title: 'Предположительный вес плода (ПВП) (г)',
+      },
+      Dsp: { type: 'number', title: 'D.sp' },
+      Dcr: { type: 'number', title: 'D.cr' },
+      Dtr: { type: 'number', title: 'D.tr' },
+      Conext: { type: 'number', title: 'Con.ext' },
+      firstHalf: {
+        type: 'string',
+        title: 'I половина',
+        placeholder:
+          'В 6 нед. Угроза- стац. Леч. В ГБ №8 (дюфастон 2 нед., затем  утрожестан до 18 нед.). В 13 нед. Угроза- стац. Леч. В БСМП (утрожестан)',
+      },
+      secondHalf: {
+        type: 'string',
+        title: 'II половина',
+        placeholder: ' В 30 нед. Анемия l. В 32 нед. Протеинурия',
+      },
+    }
     this.birth = { header: 'Роды' }
     this.birthAnomalies = { header: 'Аномалии родовой деятельности' }
     this.afterbirth = { header: 'Послед' }
