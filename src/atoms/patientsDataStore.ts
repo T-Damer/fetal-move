@@ -292,7 +292,39 @@ export class Patient {
         placeholder: ' В 30 нед. Анемия l. В 32 нед. Протеинурия',
       },
     }
-    this.birth = { header: 'Роды' }
+    this.birth = {
+      header: 'Роды',
+      birthNumber: {
+        type: 'number',
+        title: 'Роды по счету',
+      },
+      gestationalAge: {
+        type: 'number',
+        title: 'Срок гестации',
+      },
+      birthDate: {
+        type: 'date',
+        title: 'Дата родов',
+      },
+      birthTime: {
+        type: 'time',
+        title: 'Время родов',
+      },
+      doctor: {
+        type: 'string',
+        title: 'Врач',
+      },
+      normalOrPathological: {
+        type: 'string',
+        title: 'Норм/пат',
+        options: ['норм.', 'пат'],
+      },
+      wasInduced: {
+        type: 'string',
+        title: 'Индуцированные',
+        options: ['нет', 'да'],
+      },
+    }
     this.birthAnomalies = { header: 'Аномалии родовой деятельности' }
     this.afterbirth = { header: 'Послед' }
     this.newborn = { header: 'Новорожденный' }
@@ -300,8 +332,164 @@ export class Patient {
     this.bloodBiochemistry = { header: 'Биохимия крови' }
     this.urine = { header: 'Моча' }
     this.smear = { header: 'Мазок' }
-    this.ultrasound1 = { header: 'УЗИ-1 (4-15)' }
-    this.ultrasound2 = { header: 'УЗИ-2 (16-25)' }
+    this.ultrasound1 = {
+      header: 'УЗИ-1 (4-17)',
+      ultrasoundDate: {
+        type: 'date',
+        title: 'Дата УЗИ1',
+      },
+      gestationalAge: {
+        type: 'number',
+        title: 'Срок гестации УЗИ1 (нед)',
+      },
+      uterineLength: {
+        type: 'number',
+        title: 'Длина матки',
+      },
+      uterineWidth: {
+        type: 'number',
+        title: 'Ширина матки',
+      },
+      fetalEgg: {
+        type: 'number',
+        title: 'Плодное яйцо',
+        options: [0, 1],
+      },
+      coccygealPerietalFetalSize: {
+        type: 'number',
+        title: 'Копчико-теменной размер эмбриона (КТР)',
+      },
+      chorion: {
+        type: 'string',
+        title: 'Хорион',
+        options: ['задняя'], // TODO!
+      },
+      cervix: {
+        type: 'number',
+        title: 'Шейка (мм)',
+      },
+      pathology: {
+        type: 'string',
+        title: 'Патология',
+        placeholder: 'нет',
+      },
+    }
+    this.ultrasound2 = {
+      header: 'УЗИ-2 (18-20+6)',
+      ultrasoundDate: {
+        type: 'date',
+        title: 'Дата УЗИ2',
+      },
+      gestationalAge: {
+        type: 'number',
+        title: 'Срок гестации УЗИ2 (нед)',
+      },
+      prematurity: {
+        type: 'string',
+        title: 'Предлежание',
+        options: ['Головное', 'Тазовое'],
+      },
+      hypothrophy: {
+        type: 'string',
+        title: 'Гипотрофия',
+        placeholder: 'нет',
+      },
+      water: {
+        type: 'string',
+        title: 'Много/маловодие',
+        placeholder: 'нет',
+      },
+      biparietalSize: {
+        type: 'number',
+        title: 'Бипариетальный размер (БПР)',
+      },
+      dgk: {
+        type: 'number',
+        title: '(ДГК)', // TODO???
+      },
+      abdominalDoppler: {
+        type: 'number',
+        title: 'Доплерография живота (ДЖ)',
+      },
+      approximateFetalWeight: {
+        type: 'number',
+        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
+      },
+      placenta: {
+        type: 'number',
+        title: 'Плацента/мм2',
+      },
+      attachment: {
+        type: 'string',
+        title: 'Прикрепление',
+        options: ['передняя', 'задняя'],
+      },
+      poorPlacentation: {
+        type: 'string',
+        options: ['да', 'нет'],
+      },
+      placentAnomalies: {
+        type: 'string',
+        title: 'Изменения плаценты',
+        placholder: 'нет',
+      },
+      maturityDegree: {
+        type: 'number',
+        title: 'Степень зрелости',
+        options: [0, 1],
+      },
+      calcinosis: {
+        type: 'string',
+        title: 'Кальциноз',
+        options: ['нет', 'да'],
+      },
+      cysts: {
+        type: 'string',
+        titel: 'кисты',
+        options: ['нет', 'да'],
+      },
+      fetalHearthRate: {
+        type: 'number',
+        title: 'ЧСС плода',
+      },
+      resistanceIndexLeftUterineArteria: {
+        type: 'number',
+        step: 0.01,
+        title: 'Индекс резистентности (ИР) маточной левой артерии',
+      },
+      resistanceIndexRightUterineArteria: {
+        type: 'number',
+        step: 0.01,
+        title: 'Индекс резистентности (ИР) маточной правой артерии',
+      },
+      normalUterineResistanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'Норма ИР маточной артерии',
+        placholder: '0.34 - 0.61',
+      },
+      ubmilicalAteriaResistanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'ИР артерии пуповины',
+      },
+      normalUmbilicalRestanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'Норма ИР артерии пуповины',
+        placholder: '0.52 - 0.75',
+      },
+      fetalCordEntanglement: {
+        type: 'string',
+        title: 'Обвитие пуповиной плода',
+        options: ['да', 'нет'],
+      },
+      fetalPathology: {
+        type: 'string',
+        title: 'Патология плода',
+        placeholder: 'нет',
+      },
+    }
     this.ultrasound3 = { header: 'УЗИ-3 (28-35)' }
     this.ultrasound4 = { header: 'УЗИ-4 (36-40)' }
   }
