@@ -1,6 +1,7 @@
 import { atomWithStorage } from 'jotai/utils'
 
 const options = [0, 1]
+const yesNoOptions = ['нет', 'да']
 
 // we can't store Date in localstore, it will convert into string
 // so we use string types from <input type="" />
@@ -13,9 +14,9 @@ type InputObject = {
   placeholder?: string
   type?: InputType
 }
-type NumStrOptions = { options: number[] | string[] }
+type Options = { options: number[] | string[] }
 
-export type CommonContent = InputObject & Partial<NumStrOptions>
+export type CommonContent = InputObject & Partial<Options>
 
 type Header = { header: string }
 type PassportData = {
@@ -30,14 +31,14 @@ type PassportData = {
   dateFinalDiagnosis: InputObject
   finalDiagnosis: InputObject
   age: InputObject
-  bloodType: InputObject & NumStrOptions
-  Rh: InputObject & NumStrOptions
+  bloodType: InputObject & Options
+  Rh: InputObject & Options
   height: InputObject
   weight: InputObject
   worksAt: InputObject
-  livingConditions: InputObject & NumStrOptions
-  badHabits: InputObject & NumStrOptions
-  drugs: InputObject & NumStrOptions
+  livingConditions: InputObject & Options
+  badHabits: InputObject & Options
+  drugs: InputObject & Options
   address: InputObject
   complicatedSomaticHistory: InputObject
   complicatedGynecologyHistory: InputObject
@@ -49,8 +50,8 @@ type GynecologyData = {
   mensesFrom: InputObject
   mensesTo: InputObject
   mensesThrough: InputObject
-  mensesRegularity: InputObject & NumStrOptions
-  mensesHurt: InputObject & NumStrOptions
+  mensesRegularity: InputObject & Options
+  mensesHurt: InputObject & Options
   mensesCharacteristics: InputObject
   mensesLast: InputObject
 
@@ -78,10 +79,15 @@ type PregnancyData = {
   secondHalf: InputObject
 }
 
+type BirthAnomaliesData = {
+  obstetricWeakness: InputObject & Options
+}
+
 export type AvailableInputKeys = keyof PassportData &
   keyof GynecologyData &
   keyof ObstetricData &
-  keyof PregnancyData
+  keyof PregnancyData &
+  BirthAnomaliesData
 
 export class Patient {
   passport: Header & PassportData
@@ -89,7 +95,7 @@ export class Patient {
   obstetric: Header & ObstetricData
   pregnancy: Header & PregnancyData
   birth: Header
-  birthAnomalies: Header
+  birthAnomalies: Header & BirthAnomaliesData
   afterbirth: Header
   newborn: Header
   generalBloodTest: Header
@@ -158,7 +164,6 @@ export class Patient {
         title: 'Группа крови',
       },
       Rh: {
-        type: 'string',
         options: ['(+)', '(-)'],
         title: 'Резус фактор',
       },
@@ -225,17 +230,14 @@ export class Patient {
         title: 'Через',
       },
       mensesRegularity: {
-        type: 'string',
         title: 'Регулярность',
         options: ['Регулярные', 'Нерегулярные'],
       },
       mensesHurt: {
-        type: 'string',
         title: 'Болезненность',
         options: ['Безболезненные', 'Болезненные'],
       },
       mensesCharacteristics: {
-        type: 'string',
         title: 'Особенности',
       },
       mensesLast: {
@@ -244,13 +246,12 @@ export class Patient {
       },
 
       sexFrom: { type: 'number', title: 'Половая жизнь с (лет)' },
-      aborts: { type: 'string', title: 'Аборты' },
-      miscarriage: { type: 'string', title: 'Выкидыши' },
+      aborts: { title: 'Аборты' },
+      miscarriage: { title: 'Выкидыши' },
       gynecologicalDiseases: {
-        type: 'string',
         title: 'Гинекологические заболевания',
       },
-      sexTransmittedDiseases: { type: 'string', title: 'ЗППП' },
+      sexTransmittedDiseases: { title: 'ЗППП' },
     }
     this.obstetric = {
       header: 'Акушерский анамнез',
@@ -258,7 +259,7 @@ export class Patient {
         type: 'number',
         title: 'Количество беременностей',
       },
-      pregnanciesCharacteristics: { type: 'string', title: 'Характеристика' },
+      pregnanciesCharacteristics: { title: 'Характеристика' },
     }
     this.pregnancy = {
       header: 'Настоящая беременность',
@@ -281,13 +282,11 @@ export class Patient {
       Dtr: { type: 'number', title: 'D.tr' },
       Conext: { type: 'number', title: 'Con.ext' },
       firstHalf: {
-        type: 'string',
         title: 'I половина',
         placeholder:
           'В 6 нед. Угроза- стац. Леч. В ГБ №8 (дюфастон 2 нед., затем  утрожестан до 18 нед.). В 13 нед. Угроза- стац. Леч. В БСМП (утрожестан)',
       },
       secondHalf: {
-        type: 'string',
         title: 'II половина',
         placeholder: ' В 30 нед. Анемия l. В 32 нед. Протеинурия',
       },
@@ -311,22 +310,95 @@ export class Patient {
         title: 'Время родов',
       },
       doctor: {
-        type: 'string',
         title: 'Врач',
       },
       normalOrPathological: {
-        type: 'string',
         title: 'Норм/пат',
         options: ['норм.', 'пат'],
       },
       wasInduced: {
-        type: 'string',
         title: 'Индуцированные',
-        options: ['нет', 'да'],
+        options: yesNoOptions,
       },
     }
-    this.birthAnomalies = { header: 'Аномалии родовой деятельности' }
-    this.afterbirth = { header: 'Послед' }
+    this.birthAnomalies = {
+      header: 'Аномалии родовой деятельности',
+      obstetricWeakness: {
+        title: 'Слабость родовой деятельности',
+        options: yesNoOptions,
+      },
+      discoordination: {
+        title: 'Дискоординация',
+        options: yesNoOptions,
+      },
+      caesarean: {
+        title: 'Кесарево сечение',
+        options: yesNoOptions,
+      },
+      birthDuration: {
+        title: 'Продолжительность родов',
+        placeholder: '9ч. 45мин.',
+      },
+      firstPerios: {
+        title: 'Первый период',
+        placeholder: '6ч',
+      },
+      secondPerios: {
+        title: 'Второй период',
+        placeholder: '10мин.',
+      },
+      thirdPerios: {
+        title: 'Третий период',
+        placeholder: '5мин.',
+      },
+      prenatalAmnioticFluidLeakage: {
+        title: 'Дородовое излитие околоплодных вод',
+        options: yesNoOptions,
+      },
+      anhydrousGap: {
+        title: 'Безводный промежуток',
+        placeholder: '2ч. 55мин.',
+      },
+      narrowPelvis: {
+        title: 'Узкий таз',
+        options: yesNoOptions,
+      },
+      complications: {
+        title: 'Осложнения',
+        options: yesNoOptions,
+      },
+      operations: {
+        title: 'Операции',
+      },
+      amniotomia: {
+        title: 'Амниотомия',
+        options: yesNoOptions,
+      },
+      waterColor: {
+        title: 'Цвет вод',
+        options: ['светлые', 'темные'],
+      },
+      waterAmount: {
+        title: 'Количество вод',
+        options: ['мало', 'умеренно'],
+      },
+      bloodloss: {
+        title: 'Кровопотеря (мл)',
+        type: 'number',
+      },
+    }
+    this.afterbirth = {
+      header: 'Послед',
+      length: { title: 'Длина', type: 'number' },
+      width: { title: 'Ширина', type: 'number' },
+      thickness: { title: 'Толщина', type: 'number' },
+      calcinossis: { title: 'Кальциноз', options: yesNoOptions },
+      fatDegenerations: {
+        title: 'Жировые перерождения',
+        options: yesNoOptions,
+      },
+      afterbirthDefect: { title: 'Дефект последа' },
+    }
     this.newborn = { header: 'Новорожденный' }
     this.generalBloodTest = { header: 'Общий анализ крови (ОАК)' }
     this.bloodBiochemistry = { header: 'Биохимия крови' }
@@ -360,7 +432,6 @@ export class Patient {
         title: 'Копчико-теменной размер эмбриона (КТР)',
       },
       chorion: {
-        type: 'string',
         title: 'Хорион',
         options: ['задняя'], // TODO!
       },
@@ -369,7 +440,6 @@ export class Patient {
         title: 'Шейка (мм)',
       },
       pathology: {
-        type: 'string',
         title: 'Патология',
         placeholder: 'нет',
       },
@@ -385,17 +455,14 @@ export class Patient {
         title: 'Срок гестации УЗИ2 (нед)',
       },
       prematurity: {
-        type: 'string',
         title: 'Предлежание',
         options: ['Головное', 'Тазовое'],
       },
       hypothrophy: {
-        type: 'string',
         title: 'Гипотрофия',
         placeholder: 'нет',
       },
       water: {
-        type: 'string',
         title: 'Много/маловодие',
         placeholder: 'нет',
       },
@@ -420,16 +487,13 @@ export class Patient {
         title: 'Плацента/мм2',
       },
       attachment: {
-        type: 'string',
         title: 'Прикрепление',
         options: ['передняя', 'задняя'],
       },
       poorPlacentation: {
-        type: 'string',
-        options: ['да', 'нет'],
+        options: yesNoOptions,
       },
       placentAnomalies: {
-        type: 'string',
         title: 'Изменения плаценты',
         placholder: 'нет',
       },
@@ -439,14 +503,12 @@ export class Patient {
         options: [0, 1],
       },
       calcinosis: {
-        type: 'string',
         title: 'Кальциноз',
-        options: ['нет', 'да'],
+        options: yesNoOptions,
       },
       cysts: {
-        type: 'string',
         titel: 'кисты',
-        options: ['нет', 'да'],
+        options: yesNoOptions,
       },
       fetalHearthRate: {
         type: 'number',
@@ -480,12 +542,10 @@ export class Patient {
         placholder: '0.52 - 0.75',
       },
       fetalCordEntanglement: {
-        type: 'string',
         title: 'Обвитие пуповиной плода',
-        options: ['да', 'нет'],
+        options: yesNoOptions,
       },
       fetalPathology: {
-        type: 'string',
         title: 'Патология плода',
         placeholder: 'нет',
       },
