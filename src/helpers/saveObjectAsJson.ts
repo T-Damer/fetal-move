@@ -30,6 +30,13 @@ function constructCsv(dataObjToWrite: Patient) {
   return titles.join(',') + '\n' + values.join(',')
 }
 
+export async function shareFile(filename: string, dataObjToWrite: Patient) {
+  const csv = constructCsv(dataObjToWrite)
+  const blob = new File([csv], filename, { type: 'text/csv' })
+
+  await navigator.share({ title: filename, files: [blob] })
+}
+
 export default function (filename: string, dataObjToWrite: Patient) {
   const csv = constructCsv(dataObjToWrite)
   const blob = new Blob([csv], { type: 'text/csv' })

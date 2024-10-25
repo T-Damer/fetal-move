@@ -14,7 +14,7 @@ import patientsDataStore, {
   AvailableInputKeys,
   AvailableSections,
 } from 'atoms/patientsDataStore'
-import saveObjectAsJson from 'helpers/saveObjectAsJson'
+import saveObjectAsJson, { shareFile } from 'helpers/saveObjectAsJson'
 
 export default function ({ id }: { id: string }) {
   const [patientsData, setPatientsData] = useAtom(patientsDataStore)
@@ -56,12 +56,14 @@ export default function ({ id }: { id: string }) {
     [currentPatient, id, setPatientsData]
   )
 
+  const fileName = `ИР-${currentPatient.passport.historySerial.value}.csv`
+
   const saveAndExport = useCallback(() => {
-    saveObjectAsJson(
-      `ИР-${currentPatient.passport.historySerial.value}.csv`,
-      currentPatient
-    )
-  }, [currentPatient])
+    saveObjectAsJson(fileName, currentPatient)
+  }, [currentPatient, fileName])
+  const share = useCallback(() => {
+    void shareFile(fileName, currentPatient)
+  }, [currentPatient, fileName])
 
   if (!currentPatient) return <NotFound />
 
@@ -82,7 +84,7 @@ export default function ({ id }: { id: string }) {
         </Button>
         <Button
           buttonType={ButtonTypes.success}
-          onClick={saveAndExport}
+          onClick={share}
           className="w-1/2"
           iconRight={<Share />}
         >
