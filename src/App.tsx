@@ -11,8 +11,8 @@ export default function () {
   return (
     <div className="flex flex-col container min-h-[100dvh] mx-auto p-5 md:p-10 prose">
       <Router hook={useHashLocation}>
-        <Switch>
-          <ErrorBoundary fallback={<ErrorFallback />}>
+        <ErrorBoundary fallback={<ErrorFallback />}>
+          <Switch>
             <Route
               path="/patient/:id"
               component={({ params }: { params: { id: string } }) => (
@@ -21,8 +21,8 @@ export default function () {
             />
             <Route component={Main} />
             <Footer />
-          </ErrorBoundary>
-        </Switch>
+          </Switch>
+        </ErrorBoundary>
       </Router>
       <ToastContainer />
     </div>
