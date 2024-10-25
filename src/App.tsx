@@ -20,8 +20,8 @@ export default function () {
               )}
             />
             <Route component={Main} />
-            <Footer />
           </Switch>
+          <Footer />
         </ErrorBoundary>
       </Router>
       <ToastContainer />
