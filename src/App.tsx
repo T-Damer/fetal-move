@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import { useHashLocation } from 'wouter-preact/use-hash-location'
 import Button from 'components/Button'
 import DetailsPage from 'screens/DetailsPage'
+import Footer from 'components/Footer'
 import Main from 'screens/Main'
 import goMain from 'helpers/goMain'
 
@@ -25,7 +26,7 @@ function ErrorFallback() {
 
 export default function () {
   return (
-    <div className="container mx-auto p-5 md:p-10 prose">
+    <div className="flex flex-col container min-h-screen mx-auto p-5 md:p-10 prose">
       <Router hook={useHashLocation}>
         <Switch>
           <ErrorBoundary fallback={<ErrorFallback />}>
@@ -36,6 +37,7 @@ export default function () {
               )}
             />
             <Route component={Main} />
+            <Footer />
           </ErrorBoundary>
         </Switch>
       </Router>
