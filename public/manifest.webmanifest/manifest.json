@@ -10,23 +10,23 @@
     {
       "src": "./screenshots/1.png",
       "form_factor": "narrow",
-      "sizes": "640x1280",
+      "sizes": "1200x2670",
       "type": "image/png",
-      "label": "bet on price"
+      "label": "Добавляйте пациента по номеру истории"
     },
     {
       "src": "./screenshots/2.png",
       "form_factor": "narrow",
-      "sizes": "640x1280",
+      "sizes": "1200x2670",
       "type": "image/png",
-      "label": "compete with others"
+      "label": "Заполняйте историю родов, все изменения сразу сохраняются на девайсе"
     },
     {
       "src": "./screenshots/3.png",
       "form_factor": "narrow",
-      "sizes": "640x1280",
+      "sizes": "1200x2670",
       "type": "image/png",
-      "label": "get an airdrop"
+      "label": "Делитесь данными в виде таблицы"
     },
     {
       "src": "./screenshots/4.png",
