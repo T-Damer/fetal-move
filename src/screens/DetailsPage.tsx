@@ -19,7 +19,7 @@ export default function ({ id }: { id: string }) {
 
   const deleteEntry = useCallback(() => {
     if (!currentPatient) {
-      const e = 'Не получилось найти пациента при удалении :('
+      const e = 'Не удалось найти пациента при удалении 🤔'
       handleError({ e, toastMessage: e })
       return
     }
@@ -32,6 +32,11 @@ export default function ({ id }: { id: string }) {
 
   const onChange = useCallback(
     ({ value, headerId, inputKey }: OnInputChangeProps) => {
+      if (String(value).includes('\t')) {
+        const e = 'Нельзя использовать tab, файл будет поврежден'
+        handleError({ e, toastMessage: e })
+        return
+      }
       const subHeaderData =
         currentPatient[headerId as keyof typeof currentPatient]
 

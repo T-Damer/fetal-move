@@ -1,5 +1,5 @@
-import { useAtom } from 'jotai'
 import { useCallback, useMemo, useState } from 'preact/hooks'
+import { useSetAtom } from 'jotai'
 import Button from 'components/Button'
 import ButtonTypes from 'types/Button'
 import Card from 'components/Card'
@@ -10,7 +10,7 @@ import nameToDataStore from 'atoms/patientsDataStore'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()
-  const [patientsData, setPatientsData] = useAtom(nameToDataStore)
+  const setPatientsData = useSetAtom(nameToDataStore)
 
   const clearData = useCallback(() => {
     setHistorySerial(undefined)
@@ -23,22 +23,13 @@ function AddPatientForm() {
       return
     }
 
-    if (
-      Object.entries(patientsData).find(
-        ([, data]) => historySerial === data.passport.historySerial.value
-      )
-    ) {
-      alert('Такой номер уже существует\nПожалуйста используйте другой')
-      return
-    }
-
     setPatientsData((prevData) => ({
       ...prevData,
       [crypto.randomUUID()]: new Patient(historySerial),
     }))
 
     clearData()
-  }, [historySerial, patientsData, setPatientsData, clearData])
+  }, [historySerial, setPatientsData, clearData])
 
   const disabled = useMemo(() => !historySerial, [historySerial])
 

@@ -5,4 +5,11 @@ interface PatientsDataStore {
   [id: string]: Patient
 }
 
-export default atomWithStorage<PatientsDataStore>('patientsData', {})
+export default atomWithStorage<PatientsDataStore>(
+  'patientsData',
+  {},
+  undefined,
+  {
+    getOnInit: true,
+  }
+)

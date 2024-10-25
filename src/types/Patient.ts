@@ -9,7 +9,7 @@ export type PlainValue = number | string | undefined
 type InputObject = {
   value?: PlainValue
   step?: number
-  title: string
+  title?: string
   placeholder?: string
   type?: InputType
 }
@@ -17,7 +17,7 @@ type Options = { options: number[] | string[] }
 
 export type CommonContent = InputObject & Partial<Options>
 
-type Header = { header: { title: string } }
+type Header = { header: { value: string } }
 type PassportData = Header & {
   historySerial: { value: number; type: InputType; title: string }
   [key: string]: CommonContent
@@ -44,7 +44,7 @@ export default class Patient {
 
   constructor(historySerial: number) {
     this.passport = {
-      header: { title: 'Паспортная часть' },
+      header: { value: 'Паспортная часть' },
       historySerial: {
         value: historySerial,
         type: 'number',
@@ -157,7 +157,7 @@ export default class Patient {
     }
 
     this.gynecology = {
-      header: { title: 'Гинекологический анамнез' },
+      header: { value: 'Гинекологический анамнез' },
       mensesFrom: { type: 'number', title: 'Менструации с (лет)' },
       mensesTo: { type: 'number', title: 'По дней' },
       mensesThrough: {
@@ -189,7 +189,7 @@ export default class Patient {
       sexTransmittedDiseases: { title: 'ЗППП' },
     }
     this.obstetric = {
-      header: { title: 'Акушерский анамнез' },
+      header: { value: 'Акушерский анамнез' },
       numberOfPregnancies: {
         type: 'number',
         title: 'Количество беременностей',
@@ -197,7 +197,7 @@ export default class Patient {
       pregnanciesCharacteristics: { title: 'Характеристика' },
     }
     this.pregnancy = {
-      header: { title: 'Настоящая беременность' },
+      header: { value: 'Настоящая беременность' },
       preterm: { type: 'number', title: 'Срок перед родами' },
       totalGain: { type: 'number', title: 'Общая прибавка (кг)' },
       abdominalCircumference: {
@@ -227,7 +227,7 @@ export default class Patient {
       },
     }
     this.birth = {
-      header: { title: 'Роды' },
+      header: { value: 'Роды' },
       birthNumber: {
         type: 'number',
         title: 'Роды по счету',
@@ -257,7 +257,7 @@ export default class Patient {
       },
     }
     this.birthAnomalies = {
-      header: { title: 'Аномалии родовой деятельности' },
+      header: { value: 'Аномалии родовой деятельности' },
       obstetricWeakness: {
         title: 'Слабость родовой деятельности',
         options: yesNoOptions,
@@ -323,7 +323,7 @@ export default class Patient {
       },
     }
     this.afterbirth = {
-      header: { title: 'Послед' },
+      header: { value: 'Послед' },
       length: { title: 'Длина', type: 'number' },
       width: { title: 'Ширина', type: 'number' },
       thickness: { title: 'Толщина', type: 'number' },
@@ -335,7 +335,7 @@ export default class Patient {
       afterbirthDefect: { title: 'Дефект последа' },
     }
     this.newborn = {
-      header: { title: 'Новорожденный' },
+      header: { value: 'Новорожденный' },
       postpartumPeriod: { title: 'Течение послеродового периода' },
       newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
       newbornLength: { title: 'Длина тела (см)', type: 'number' },
@@ -445,16 +445,20 @@ export default class Patient {
       },
     }
     this.generalBloodTest = {
-      header: { title: 'Общий анализ крови (ОАК)' },
+      header: { value: 'Общий анализ крови (ОАК)' },
       dischargeStatus: {
         title: 'Состояние при выписке',
         options: ['Удовл.', 'Неудовл.'],
       },
-      date: { title: 'Дата', type: 'date' },
-      hb: { title: 'Гемоглобин (г/л)', type: 'number' },
-      er: { title: 'Эритроциты', step: 0.01, type: 'number' },
-      cv: { title: 'Цветовой показатель (ЦП)', step: 0.01, type: 'number' },
-      leu: { title: 'Лейкоциты', step: 0.1, type: 'number' },
+      gbtDate: { title: 'Дата', type: 'date' },
+      gbtHemoglobin: { title: 'Гемоглобин (г/л)', type: 'number' },
+      gbtErythrocytes: { title: 'Эритроциты', step: 0.01, type: 'number' },
+      gbtColorValue: {
+        title: 'Цветовой показатель (ЦП)',
+        step: 0.01,
+        type: 'number',
+      },
+      gbtLeukocytes: { title: 'Лейкоциты', step: 0.1, type: 'number' },
       bacillinuclear: { title: 'Палочкоядерные (п/я) - %', type: 'number' },
       segmentonuclear: { title: 'Сегментоядерные (с/я) - %', type: 'number' },
       monocyti: { title: 'Моноциты (М)', type: 'number' },
@@ -467,8 +471,8 @@ export default class Patient {
       other: { title: 'Другие изменеия' },
     }
     this.bloodBiochemistry = {
-      header: { title: 'Биохимия крови' },
-      date: { title: 'Дата', type: 'date' },
+      header: { value: 'Биохимия крови' },
+      bdDate: { title: 'Дата', type: 'date' },
       AsAT: { title: 'АсАТ', type: 'number', step: 0.1 },
       AlAT: { title: 'АлАТ', type: 'number', step: 0.1 },
       bilirubin: { title: 'Билирубин общий', type: 'number', step: 0.1 },
@@ -502,8 +506,8 @@ export default class Patient {
       fibrinogenB: { title: 'Фибриноген Б', type: 'number', step: 0.1 },
     }
     this.urine = {
-      header: { title: 'Моча' },
-      date: { title: 'Дата', type: 'date' },
+      header: { value: 'Моча' },
+      urineDate: { title: 'Дата', type: 'date' },
       density: { title: 'Плотность', type: 'number' },
       proteins: {
         title: 'Белок',
@@ -511,18 +515,21 @@ export default class Patient {
         value: 0,
         step: 0.01,
       },
-      l: { title: 'Лейкоциты', type: 'number' },
+      urineLeukocytes: { title: 'Лейкоциты', type: 'number' },
       cilinders: { title: 'Цилиндры', type: 'number', value: 0 },
-      er: { title: 'Эритроциты', type: 'number', value: 0 },
+      urineErythrocytes: { title: 'Эритроциты', type: 'number', value: 0 },
       bacteriuria: { title: 'Бактериурия', type: 'number', value: 0 },
       ketonBodies: { title: 'Кетоновые тела', type: 'number', value: 0 },
       sediment: { title: 'Осадок', value: 'нет' },
       glocosa: { title: 'Глюкоза', type: 'number', value: 0 },
     }
     this.smear = {
-      header: { title: 'Мазок' },
-      date: { title: 'Дата', type: 'date' },
-      l: { title: 'Лейкоциты', value: '0-1 во влагалище, 2-3 в ш/м' },
+      header: { value: 'Мазок' },
+      smearDate: { title: 'Дата', type: 'date' },
+      smearLeukocytes: {
+        title: 'Лейкоциты',
+        value: '0-1 во влагалище и 2-3 в ш/м',
+      },
       epithelialСells: {
         title: 'Эпителиальные клетки',
         options: ['немного', 'много'],
@@ -530,7 +537,7 @@ export default class Patient {
       flora: { title: 'Флора', value: 'б/о' },
     }
     this.ultrasound1 = {
-      header: { title: 'УЗИ-1 (4-17)' },
+      header: { value: 'УЗИ-1 (4-17)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-1',
@@ -570,7 +577,7 @@ export default class Patient {
       },
     }
     this.ultrasound2 = {
-      header: { title: 'УЗИ-2 (18-20+6)' },
+      header: { value: 'УЗИ-2 (18-20+6)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-2',
@@ -676,7 +683,7 @@ export default class Patient {
       },
     }
     this.ultrasound3 = {
-      header: { title: 'УЗИ-3 (36-40)' },
+      header: { value: 'УЗИ-3 (36-40)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-3',
@@ -787,7 +794,7 @@ export default class Patient {
       },
     }
     this.ultrasound4 = {
-      header: { title: 'УЗИ-4 (36-40)' },
+      header: { value: 'УЗИ-4 (36-40)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-4',

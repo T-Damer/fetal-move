@@ -1,4 +1,5 @@
 import 'index.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { registerSW } from 'virtual:pwa-register'
 import { render } from 'preact'
 import App from 'App'

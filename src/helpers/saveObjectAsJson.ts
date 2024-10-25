@@ -21,7 +21,7 @@ function constructCsv(dataObjToWrite: Patient) {
     })
   })
 
-  return titles.join(',') + '\n' + values.join(',')
+  return titles.join('\t') + '\n' + values.join('\t')
 }
 
 export async function shareFile(filename: string, dataObjToWrite: Patient) {
