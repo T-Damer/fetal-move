@@ -1,14 +1,16 @@
-import { useAtom } from 'jotai'
 import { useCallback, useMemo, useState } from 'preact/hooks'
+import { useSetAtom } from 'jotai'
 import Button from 'components/Button'
+import ButtonTypes from 'types/Button'
 import Card from 'components/Card'
 import HumanIcon from 'components/Icons/HumanIcon'
+import Patient from 'types/Patient'
 import handleError from 'helpers/handleError'
-import nameToDataStore, { Patient } from 'atoms/patientsDataStore'
+import nameToDataStore from 'atoms/patientsDataStore'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()
-  const [patientsData, setPatientsData] = useAtom(nameToDataStore)
+  const setPatientsData = useSetAtom(nameToDataStore)
 
   const clearData = useCallback(() => {
     setHistorySerial(undefined)
@@ -21,22 +23,13 @@ function AddPatientForm() {
       return
     }
 
-    if (
-      Object.entries(patientsData).find(
-        ([, data]) => historySerial === data.passport.historySerial.value
-      )
-    ) {
-      alert('Такой номер уже существует\nПожалуйста используйте другой')
-      return
-    }
-
     setPatientsData((prevData) => ({
       ...prevData,
       [crypto.randomUUID()]: new Patient(historySerial),
     }))
 
     clearData()
-  }, [historySerial, patientsData, setPatientsData, clearData])
+  }, [historySerial, setPatientsData, clearData])
 
   const disabled = useMemo(() => !historySerial, [historySerial])
 
@@ -56,13 +49,23 @@ function AddPatientForm() {
         <HumanIcon />
       </label>
 
-      <div className="flex w-full items-center justify-between">
-        <Button onSubmit={clearData} disabled={disabled}>
-          Очистить
+      <div className="flex items-center gap-x-2 pr-1.5">
+        <Button
+          buttonType={ButtonTypes.success}
+          disabled={disabled}
+          onClick={onSubmit}
+          className="w-1/2"
+        >
+          Добавить
         </Button>
 
-        <Button disabled={disabled} onSubmit={onSubmit} isGreen>
-          Добавить
+        <Button
+          buttonType={ButtonTypes.error}
+          onClick={clearData}
+          disabled={disabled}
+          className="w-1/2"
+        >
+          Очистить
         </Button>
       </div>
     </div>

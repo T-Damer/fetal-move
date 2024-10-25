@@ -1,7 +1,7 @@
-import { CommonContent, Patient } from 'atoms/patientsDataStore'
 import { OnChange } from 'types/FormEvent'
 import { OnChangeInput } from 'types/OnInputChangeProps'
 import DateInput from 'components/DateInput'
+import Patient, { CommonContent } from 'types/Patient'
 
 interface ExtractedInputsProps {
   currentPatient: Patient
@@ -22,7 +22,7 @@ function ProcessedInput({
       <select
         class="select select-bordered select-xs "
         value={value}
-        onChange={(e) =>
+        onInput={(e) =>
           onChange({ currentTarget: { value: e.currentTarget.value } })
         }
       >
@@ -41,7 +41,7 @@ function ProcessedInput({
       type={type}
       onInput={onChange}
       placeholder={input.placeholder || '---'}
-      className={`placeholder-gray-300 border-b-gray-300 w-full border-b-2 border-dotted`}
+      className="placeholder:text-opacity-30 placeholder:text-slate-500 input input-bordered"
     >
       {value}
     </input>
@@ -52,13 +52,13 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
   const elements = Object.entries(currentPatient).map(([headerId, data]) => (
     <>
       <h2 id={headerId} className="underline text-right">
-        {data.header}
+        {data.header.value}
       </h2>
-      {Object.entries(data).map(([inputKey, inputValue]) => {
+      {Object.entries(data).map(([inputKey, inputValue], index) => {
         const input = inputValue as CommonContent
 
-        if (!input?.title) return null
-        const { type } = input
+        if (!index || !input?.title) return null
+        const { type = 'string' } = input
 
         return (
           <label class="form-control w-full my-2">

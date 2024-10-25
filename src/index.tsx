@@ -1,12 +1,13 @@
 import 'index.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { registerSW } from 'virtual:pwa-register'
 import { render } from 'preact'
 import App from 'App'
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm('New content available 🎉 Reload?')) {
-      updateSW(true)
+    if (confirm('Доступно обновление 🎉 Перезагрузить страницу?')) {
+      void updateSW(true)
     }
   },
 })

@@ -1,26 +1,25 @@
-import { PropsWithChildren } from 'preact/compat'
+import ButtonTypes, { ButtonProps, buttonClassNames } from 'types/Button'
 
 export default function ({
+  buttonType = ButtonTypes.primary,
   children,
   disabled,
-  isGreen,
-  onSubmit,
-}: PropsWithChildren & {
-  disabled?: boolean
-  onSubmit?: () => void
-  isGreen?: boolean
-}) {
-  const colors = isGreen
-    ? 'hover:enabled:bg-green-500 enabled:bg-green-700  enabled:border-0 enabled:text-white'
-    : 'hover:bg-red-300 border-0 '
+  onClick,
+  className,
+  iconLeft,
+  iconRight,
+}: ButtonProps) {
+  const extractedClassNames = buttonClassNames()[buttonType]
 
   return (
     <button
-      className={`btn w-28 transition-all disabled:opacity-70 ${colors}`}
-      onClick={onSubmit}
+      className={`btn flex flex-row gap-x-2 *:transition-all ${extractedClassNames} ${className}`}
+      onClick={onClick}
       disabled={disabled}
     >
+      {iconLeft}
       {children}
+      {iconRight}
     </button>
   )
 }
