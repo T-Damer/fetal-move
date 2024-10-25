@@ -4,8 +4,9 @@ import Button from 'components/Button'
 import ButtonTypes from 'types/Button'
 import Card from 'components/Card'
 import HumanIcon from 'components/Icons/HumanIcon'
+import Patient from 'types/Patient'
 import handleError from 'helpers/handleError'
-import nameToDataStore, { Patient } from 'atoms/patientsDataStore'
+import nameToDataStore from 'atoms/patientsDataStore'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()

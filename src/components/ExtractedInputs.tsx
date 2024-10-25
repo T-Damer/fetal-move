@@ -1,7 +1,7 @@
-import { CommonContent, Patient } from 'atoms/patientsDataStore'
 import { OnChange } from 'types/FormEvent'
 import { OnChangeInput } from 'types/OnInputChangeProps'
 import DateInput from 'components/DateInput'
+import Patient, { CommonContent } from 'types/Patient'
 
 interface ExtractedInputsProps {
   currentPatient: Patient

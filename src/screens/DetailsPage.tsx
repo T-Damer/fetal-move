@@ -10,10 +10,7 @@ import OnInputChangeProps from 'types/OnInputChangeProps'
 import Save from 'components/Icons/Save'
 import Share from 'components/Icons/Share'
 import handleError from 'helpers/handleError'
-import patientsDataStore, {
-  AvailableInputKeys,
-  AvailableSections,
-} from 'atoms/patientsDataStore'
+import patientsDataStore from 'atoms/patientsDataStore'
 import saveObjectAsJson, { shareFile } from 'helpers/saveObjectAsJson'
 
 export default function ({ id }: { id: string }) {
@@ -35,14 +32,15 @@ export default function ({ id }: { id: string }) {
 
   const onChange = useCallback(
     ({ value, headerId, inputKey }: OnInputChangeProps) => {
-      const subHeaderData = currentPatient[headerId as AvailableSections]
+      const subHeaderData =
+        currentPatient[headerId as keyof typeof currentPatient]
 
       const updated = {
         ...currentPatient,
         [headerId]: {
           ...subHeaderData,
           [inputKey]: {
-            ...(subHeaderData[inputKey as AvailableInputKeys] as object), // TS complains if you don't convert
+            ...subHeaderData[inputKey],
             value,
           },
         },

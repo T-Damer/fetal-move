@@ -3,11 +3,7 @@
 // title1, title2
 // value1, value2
 
-import {
-  AvailableInputKeys,
-  CommonContent,
-  Patient,
-} from 'atoms/patientsDataStore'
+import Patient, { CommonContent } from 'types/Patient'
 
 function constructCsv(dataObjToWrite: Patient) {
   // parse like this:
@@ -15,16 +11,14 @@ function constructCsv(dataObjToWrite: Patient) {
   const values: string[] = []
 
   Object.keys(dataObjToWrite).forEach((headerId) => {
-    Object.values(dataObjToWrite[headerId as AvailableInputKeys]).forEach(
-      (data) => {
-        const { title, value } = data as CommonContent
-        if (!title) return
-        const safeValue = value || '-'
+    Object.values(dataObjToWrite[headerId as keyof Patient]).forEach((data) => {
+      const { title, value } = data as CommonContent
+      if (!title) return
+      const safeValue = value || '-'
 
-        titles.push(title)
-        values.push(String(safeValue))
-      }
-    )
+      titles.push(title)
+      values.push(String(safeValue))
+    })
   })
 
   return titles.join(',') + '\n' + values.join(',')
