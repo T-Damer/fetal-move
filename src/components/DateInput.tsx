@@ -18,7 +18,6 @@ export default function ({
         value={value}
         onInput={onChange}
         type="date"
-        placeholder="Введите дату"
         ref={dateInputRef}
         required
       />

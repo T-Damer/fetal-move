@@ -22,7 +22,7 @@ function ProcessedInput({
       <select
         class="select select-bordered select-xs "
         value={value}
-        onChange={(e) =>
+        onInput={(e) =>
           onChange({ currentTarget: { value: e.currentTarget.value } })
         }
       >

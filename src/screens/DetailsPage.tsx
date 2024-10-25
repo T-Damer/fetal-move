@@ -2,10 +2,13 @@ import { navigate } from 'wouter-preact/use-hash-location'
 import { useAtom } from 'jotai'
 import { useCallback } from 'preact/hooks'
 import Button from 'components/Button'
+import ButtonTypes from 'types/Button'
 import DetailsHeader from 'components/DetailsHeader'
 import ExtractedInputs from 'components/ExtractedInputs'
 import NotFound from 'components/NotFound'
 import OnInputChangeProps from 'types/OnInputChangeProps'
+import Save from 'components/Icons/Save'
+import Share from 'components/Icons/Share'
 import handleError from 'helpers/handleError'
 import patientsDataStore, {
   AvailableInputKeys,
@@ -68,9 +71,24 @@ export default function ({ id }: { id: string }) {
 
       <ExtractedInputs currentPatient={currentPatient} onChange={onChange} />
 
-      <Button isGreen onSubmit={saveAndExport}>
-        Поделиться
-      </Button>
+      <div className="flex flex-row gap-x-2 sticky bottom-2">
+        <Button
+          buttonType={ButtonTypes.success}
+          onClick={saveAndExport}
+          className="w-1/2"
+          iconRight={<Save />}
+        >
+          Сохранить
+        </Button>
+        <Button
+          buttonType={ButtonTypes.success}
+          onClick={saveAndExport}
+          className="w-1/2"
+          iconRight={<Share />}
+        >
+          Поделиться
+        </Button>
+      </div>
     </div>
   )
 }

@@ -169,20 +169,20 @@ export class Patient {
       },
       height: {
         type: 'number',
-        title: 'Рост',
+        title: 'Рост матери',
       },
       weight: {
         type: 'number',
-        title: 'Вес',
+        title: 'Вес матери',
       },
       worksAt: {
         title: 'Работа',
         placeholder: 'Преподаватель',
       },
       livingConditions: {
+        title: 'Социально-бытовые условия',
         type: 'number',
         options,
-        title: 'Социально-бытовые условия',
       },
       badHabits: {
         type: 'number',
@@ -399,16 +399,206 @@ export class Patient {
       },
       afterbirthDefect: { title: 'Дефект последа' },
     }
-    this.newborn = { header: 'Новорожденный' }
-    this.generalBloodTest = { header: 'Общий анализ крови (ОАК)' }
-    this.bloodBiochemistry = { header: 'Биохимия крови' }
-    this.urine = { header: 'Моча' }
-    this.smear = { header: 'Мазок' }
+    this.newborn = {
+      header: 'Новорожденный',
+      postpartumPeriod: { title: 'Течение послеродового периода' },
+      newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
+      newbornLength: { title: 'Длина тела (см)', type: 'number' },
+      gender: { title: 'Пол', options: ['м', 'ж'] },
+      headCircumference: { title: 'Окружность головы (см)', type: 'number' },
+      chestCircumference: { title: 'Окружность груди (см)', type: 'number' },
+      oneMin: { title: '1 мин', type: 'number' },
+      fiveMin: { title: '5 мин', type: 'number' },
+      neonatalDiagnosis: {
+        title: 'Неонатальный диагноз',
+        placeholder: 'Период новорожденности. Кесарево сечение',
+      },
+      prematrue: { title: 'Доношенный', options: yesNoOptions },
+      notPrematrue: { title: 'Недоношенный', options: yesNoOptions },
+      aspyrationSymptome: { title: 'Симптом аспирации', options: yesNoOptions },
+      SOM: {
+        title: 'Задержка внутриутробного развития (ЗВУР)',
+        options: yesNoOptions,
+      },
+      degreeSOM: {
+        title: 'Степень',
+        type: 'number',
+        options: [1, 2, 3],
+      },
+      typeSOM: {
+        title: 'Тип',
+        options: [
+          'Гипотрофический (ассиметричный)',
+          'Гипопластический (симметричный)',
+          'Диспластический (симметричный) ',
+        ],
+      },
+      umbilicalCordEntanglement: {
+        title: 'Обвитие пуповиной',
+        options: yesNoOptions,
+      },
+      postHypoxicCondition: {
+        title: 'Постгипоксическое состояние',
+        options: yesNoOptions,
+      },
+      morphoFunctionalImmaturity: {
+        title: 'Морфо-функциональная незрелость',
+        options: yesNoOptions,
+      },
+      hormonalCrisis: { title: 'Гормональный криз', options: yesNoOptions },
+      yellowing: { title: 'Желтуха', options: yesNoOptions },
+      erythema: { title: 'Эритема', options: yesNoOptions },
+      respiratoryDistressSyndrome: {
+        title: 'Синдром дыхательных расстройств (СДР)',
+        options: yesNoOptions,
+      },
+      dacryocis: { title: 'Дакриоцис', options: yesNoOptions },
+      intrauterineInfections: {
+        title: 'Внутриутробные инфекции (ВУИ)',
+        options: yesNoOptions,
+      },
+      cardiopathies: { title: 'Кардиопатии', options: yesNoOptions },
+      pneumopathology: { title: 'Пневмопатология', options: yesNoOptions },
+      fetalHemolyticDisease: {
+        title: 'Гемолитическая болезнь плода (ГБН)',
+        options: yesNoOptions,
+      },
+      сongenitalЬalformations: { title: 'Врожденные пороки развития (ВПР)' },
+      congenitalHeartDisease: { title: 'Врожденные пороки сердца (ВПС)' },
+      allergoDermathitis: { title: 'Аллергодерматит', options: yesNoOptions },
+      pelvicDysplasia: {
+        title: 'Дисплазия тазового сустава',
+        options: yesNoOptions,
+      },
+      paresis: { title: 'Парезы', options: yesNoOptions },
+      perinatalEncephalopathy: {
+        title: 'Перинатальная энцефалопатиея (ПЭП)',
+        options: yesNoOptions,
+      },
+      encephalopathyDegree: {
+        title: 'Степень',
+        options: ['Легкая', 'Средняя', 'Тяжелая'],
+      },
+      weightLoss: { title: 'Убыль массы тела' },
+      neurologicalStatus: {
+        title: 'Неврологический статус',
+        placeholder: 'Ррефлексы живые, нормотонус',
+      },
+      cordFell: {
+        title: 'Пуповина отпала',
+        options: yesNoOptions,
+      },
+      tuberculosisVaccine: {
+        title: 'БЦЖ',
+        options: yesNoOptions,
+      },
+      healthGroup: {
+        title: 'Группа здоровья',
+        options: ['I', 'IIA', 'IIB', 'III', 'IV'],
+      },
+      aro: {
+        title: 'АРО, сутки', // TODO: ?
+        options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
+      },
+      home: {
+        title: 'Домой, сутки',
+        type: 'number',
+      },
+      hospitalTreatment: {
+        title: 'ОДКБ, сутки',
+        options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
+      },
+    }
+    this.generalBloodTest = {
+      header: 'Общий анализ крови (ОАК)',
+      dischargeStatus: {
+        title: 'Состояние при выписке',
+        options: ['Удовл.', 'Неудовл.'],
+      },
+      date: { title: 'Дата', type: 'date' },
+      hb: { title: 'Гемоглобин (г/л)', type: 'number' },
+      er: { title: 'Эритроциты', step: 0.01, type: 'number' },
+      cv: { title: 'Цветовой показатель (ЦП)', step: 0.01, type: 'number' },
+      leu: { title: 'Лейкоциты', step: 0.1, type: 'number' },
+      bacillinuclear: { title: 'Палочкоядерные (п/я) - %', type: 'number' },
+      segmentonuclear: { title: 'Сегментоядерные (с/я) - %', type: 'number' },
+      monocyti: { title: 'Моноциты (М)', type: 'number' },
+      eosinophils: { title: 'Эозинофилы (Э)', type: 'number' },
+      lymphocyti: { title: 'Лимфоциты (Л)', type: 'number' },
+      erythrocyteSedimentationRate: {
+        title: 'Скорость оседания эритроцитов (СОЭ) - мм/час',
+        type: 'number',
+      },
+      other: { title: 'Другие изменеия' },
+    }
+    this.bloodBiochemistry = {
+      header: 'Биохимия крови',
+      date: { title: 'Дата', type: 'date' },
+      AsAT: { title: 'АсАТ', type: 'number', step: 0.1 },
+      AlAT: { title: 'АлАТ', type: 'number', step: 0.1 },
+      bilirubin: { title: 'Билирубин общий', type: 'number', step: 0.1 },
+      bilirubinBound: {
+        title: 'Билирубин связанный',
+        type: 'number',
+        step: 0.1,
+        defaultValue: 0,
+      },
+      bilirubinFree: {
+        title: 'Билирубин свободный',
+        type: 'number',
+        step: 0.1,
+        defaultValue: 0,
+      },
+      totalProtein: {
+        title: 'Общий белок',
+        type: 'number',
+      },
+      thymolTest: { title: 'Тимоловая проба', options: ['нет', '-', '+'] },
+      urea: { title: 'Мочевина', type: 'number', step: 0.1 },
+      сreatinine: { title: 'Креатинин' },
+      amylase: { title: 'Амилаза', type: 'number', defaulValue: 0 },
+      prothrombinIndex: {
+        title: 'Протромбиновый индекс (ПТИ)',
+        type: 'number',
+      },
+      glucose: { title: 'Глюкоза', type: 'number', step: 0.1 },
+      hematocrit: { title: 'Гематокрит', type: 'number', step: 0.1 },
+      fibrinogenA: { title: 'Фибриноген А', type: 'number', step: 0.1 },
+      fibrinogenB: { title: 'Фибриноген Б', type: 'number', step: 0.1 },
+    }
+    this.urine = {
+      header: 'Моча',
+      date: { title: 'Дата', type: 'date' },
+      density: { title: 'Плотность', type: 'number' },
+      proteins: {
+        title: 'Белок',
+        type: 'number',
+        defaultValue: 0,
+        step: 0.01,
+      },
+      l: { title: 'Лейкоциты', type: 'number' },
+      cilinders: { title: 'Цилиндры', type: 'number', defaultValue: 0 },
+      er: { title: 'Эритроциты', type: 'number', defaultValue: 0 },
+      bacteriuria: { title: 'Бактериурия', type: 'number', defaultValue: 0 },
+      ketonBodies: { title: 'Кетоновые тела', type: 'number', defaultValue: 0 },
+      sediment: { title: 'Осадок', defaultValue: 'нет' },
+      glocosa: { title: 'Глюкоза', type: 'number', defaultValue: 0 },
+    }
+    this.smear = {
+      header: 'Мазок',
+      date: { title: 'Дата', type: 'date' },
+      l: { title: 'Лейкоциты', defaultValue: '0-1 во влагалище, 2-3 в ш/м' },
+      epithelialСells: {
+        title: 'Эпителиальные клетки',
+        options: ['немного', 'много'],
+      },
+      flora: { title: 'Флора', defaultValue: 'б/о' },
+    }
     this.ultrasound1 = {
       header: 'УЗИ-1 (4-17)',
       ultrasoundDate: {
         type: 'date',
-        title: 'Дата УЗИ1',
+        title: 'Дата УЗИ-1',
       },
       gestationalAge: {
         type: 'number',
@@ -448,7 +638,7 @@ export class Patient {
       header: 'УЗИ-2 (18-20+6)',
       ultrasoundDate: {
         type: 'date',
-        title: 'Дата УЗИ2',
+        title: 'Дата УЗИ-2',
       },
       gestationalAge: {
         type: 'number',
@@ -491,6 +681,117 @@ export class Patient {
         options: ['передняя', 'задняя'],
       },
       poorPlacentation: {
+        title: 'Низкая плацентация',
+        options: yesNoOptions,
+      },
+      placentAnomalies: {
+        title: 'Изменения плаценты',
+        placholder: 'нет',
+      },
+      maturityDegree: {
+        title: 'Степень зрелости',
+        options: ['I', 'I-II', 'II', 'II-III', 'III'],
+      },
+      calcinosis: {
+        title: 'Кальциноз',
+        options: yesNoOptions,
+      },
+      cysts: {
+        titel: 'Кисты',
+        options: yesNoOptions,
+      },
+      fetalHearthRate: {
+        title: 'ЧСС плода',
+        type: 'number',
+      },
+      resistanceIndexLeftUterineArteria: {
+        title: 'Индекс резистентности (ИР) маточной левой артерии',
+        type: 'number',
+        step: 0.01,
+      },
+      resistanceIndexRightUterineArteria: {
+        title: 'Индекс резистентности (ИР) маточной правой артерии',
+        type: 'number',
+        step: 0.01,
+      },
+      normalUterineResistanceIndex: {
+        title: 'Норма ИР маточной артерии',
+        type: 'number',
+        step: 0.01,
+        defaultValue: 0.59,
+      },
+      ubmilicalAteriaResistanceIndex: {
+        title: 'ИР артерии пуповины',
+        type: 'number',
+        step: 0.01,
+      },
+      normalUmbilicalRestanceIndex: {
+        title: 'Норма ИР артерии пуповины',
+        type: 'number',
+        step: 0.01,
+        defaultValue: 0.73,
+      },
+      fetalCordEntanglement: {
+        title: 'Обвитие пуповиной плода',
+        options: yesNoOptions,
+      },
+      fetalPathology: {
+        title: 'Патология плода',
+        defaultValue: 'нет',
+      },
+    }
+    this.ultrasound3 = {
+      header: 'УЗИ-3 (36-40)',
+      ultrasoundDate: {
+        type: 'date',
+        title: 'Дата УЗИ-3',
+      },
+      gestationalAge: {
+        title: 'Срок гестации УЗИ3 (нед)',
+        type: 'number',
+      },
+      prematurity: {
+        title: 'Предлежание',
+        options: ['Головное', 'Тазовое'],
+      },
+      hypothrophy: {
+        title: 'Гипотрофия',
+        defaultValue: 'нет',
+      },
+      water: {
+        title: 'Много/маловодие',
+        defaultValue: 'нет',
+      },
+      biparietalSize: {
+        title: 'Бипариетальный размер (БПР)',
+        type: 'number',
+      },
+      dgk: {
+        title: '(ДГК)', // TODO???
+        type: 'number',
+      },
+      femurLength: {
+        title: 'Длина бедренной кости (ДБК) - мм',
+        type: 'number',
+      },
+      abdominalDoppler: {
+        title: 'Доплерография живота (ДЖ)',
+        type: 'number',
+      },
+      approximateFetalWeight: {
+        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
+        type: 'number',
+      },
+      placenta: {
+        title: 'Плацента/мм2',
+        type: 'number',
+      },
+      attachment: {
+        title: 'Прикрепление',
+        options: ['передняя', 'задняя'],
+      },
+      poorPlacentation: {
+        title: 'Низкая плацентация',
         options: yesNoOptions,
       },
       placentAnomalies: {
@@ -511,8 +812,8 @@ export class Patient {
         options: yesNoOptions,
       },
       fetalHearthRate: {
-        type: 'number',
         title: 'ЧСС плода',
+        type: 'number',
       },
       resistanceIndexLeftUterineArteria: {
         type: 'number',
@@ -550,8 +851,117 @@ export class Patient {
         placeholder: 'нет',
       },
     }
-    this.ultrasound3 = { header: 'УЗИ-3 (28-35)' }
-    this.ultrasound4 = { header: 'УЗИ-4 (36-40)' }
+    this.ultrasound4 = {
+      header: 'УЗИ-4 (36-40)',
+      ultrasoundDate: {
+        type: 'date',
+        title: 'Дата УЗИ-4',
+      },
+      gestationalAge: {
+        title: 'Срок гестации УЗИ3 (нед)',
+        type: 'number',
+      },
+      prematurity: {
+        title: 'Предлежание',
+        options: ['Головное', 'Тазовое'],
+      },
+      hypothrophy: {
+        title: 'Гипотрофия',
+        defaultValue: 'нет',
+      },
+      water: {
+        title: 'Много/маловодие',
+        defaultValue: 'нет',
+      },
+      biparietalSize: {
+        title: 'Бипариетальный размер (БПР)',
+        type: 'number',
+      },
+      dgk: {
+        title: '(ДГК)', // TODO???
+        type: 'number',
+      },
+      femurLength: {
+        title: 'Длина бедренной кости (ДБК) - мм',
+        type: 'number',
+      },
+      abdominalDoppler: {
+        title: 'Доплерография живота (ДЖ)',
+        type: 'number',
+      },
+      approximateFetalWeight: {
+        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
+        type: 'number',
+      },
+      placenta: {
+        title: 'Плацента/мм2',
+        type: 'number',
+      },
+      attachment: {
+        title: 'Прикрепление',
+        options: ['передняя', 'задняя'],
+      },
+      poorPlacentation: {
+        title: 'Низкая плацентация',
+        options: yesNoOptions,
+      },
+      placentAnomalies: {
+        title: 'Изменения плаценты',
+        placholder: 'нет',
+      },
+      maturityDegree: {
+        type: 'number',
+        title: 'Степень зрелости',
+        options: [0, 1],
+      },
+      calcinosis: {
+        title: 'Кальциноз',
+        options: yesNoOptions,
+      },
+      cysts: {
+        titel: 'кисты',
+        options: yesNoOptions,
+      },
+      fetalHearthRate: {
+        title: 'ЧСС плода',
+        type: 'number',
+      },
+      resistanceIndexLeftUterineArteria: {
+        type: 'number',
+        step: 0.01,
+        title: 'Индекс резистентности (ИР) маточной левой артерии',
+      },
+      resistanceIndexRightUterineArteria: {
+        type: 'number',
+        step: 0.01,
+        title: 'Индекс резистентности (ИР) маточной правой артерии',
+      },
+      normalUterineResistanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'Норма ИР маточной артерии',
+        placholder: '0.34 - 0.61',
+      },
+      ubmilicalAteriaResistanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'ИР артерии пуповины',
+      },
+      normalUmbilicalRestanceIndex: {
+        type: 'number',
+        step: 0.01,
+        title: 'Норма ИР артерии пуповины',
+        placholder: '0.52 - 0.75',
+      },
+      fetalCordEntanglement: {
+        title: 'Обвитие пуповиной плода',
+        options: yesNoOptions,
+      },
+      fetalPathology: {
+        title: 'Патология плода',
+        placeholder: 'нет',
+      },
+    }
   }
 }
 

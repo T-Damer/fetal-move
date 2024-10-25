@@ -5,8 +5,8 @@ import App from 'App'
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm('New content available 🎉 Reload?')) {
-      updateSW(true)
+    if (confirm('Доступно обновление 🎉 Перезагрузить страницу?')) {
+      void updateSW(true)
     }
   },
 })

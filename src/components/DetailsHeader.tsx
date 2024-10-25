@@ -1,18 +1,16 @@
+import Button from 'components/Button'
+import ButtonTypes from 'types/Button'
+import TrashBin from 'components/Icons/TrashBin'
 import goMain from 'helpers/goMain'
 
 export default function ({ deleteEntry }: { deleteEntry: () => void }) {
   return (
     <div className="flex justify-between items-center">
-      <a
-        onClick={goMain}
-        className="cursor-pointer hover:opacity-50 transition-opacity"
-      >
-        ◄ Назад
-      </a>
+      <Button onClick={goMain}>◄</Button>
 
-      <a className="text-red-400 cursor-pointer" onClick={deleteEntry}>
-        Удалить
-      </a>
+      <Button buttonType={ButtonTypes.error} onClick={deleteEntry}>
+        <TrashBin />
+      </Button>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import { useCallback, useMemo, useState } from 'preact/hooks'
 import Button from 'components/Button'
+import ButtonTypes from 'types/Button'
 import Card from 'components/Card'
 import HumanIcon from 'components/Icons/HumanIcon'
 import handleError from 'helpers/handleError'
@@ -56,13 +57,23 @@ function AddPatientForm() {
         <HumanIcon />
       </label>
 
-      <div className="flex w-full items-center justify-between">
-        <Button onSubmit={clearData} disabled={disabled}>
-          Очистить
+      <div className="flex items-center gap-x-2 pr-1.5">
+        <Button
+          buttonType={ButtonTypes.success}
+          disabled={disabled}
+          onClick={onSubmit}
+          className="w-1/2"
+        >
+          Добавить
         </Button>
 
-        <Button disabled={disabled} onSubmit={onSubmit} isGreen>
-          Добавить
+        <Button
+          buttonType={ButtonTypes.error}
+          onClick={clearData}
+          disabled={disabled}
+          className="w-1/2"
+        >
+          Очистить
         </Button>
       </div>
     </div>
