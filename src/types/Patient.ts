@@ -1,4 +1,5 @@
 const options = [0, 1]
+const calcinosisOptions = ['нет', 'да', 'выраженный кальциноз']
 const yesNoOptions = ['нет', 'да']
 
 // we can't store Date in localstore, it will convert into string
@@ -129,10 +130,6 @@ export default class Patient {
         options,
         title: 'Лекарства',
       },
-      address: {
-        title: 'Адрес',
-        placeholder: 'Воронеж, Коминтер. р-он. ул. Победы д.0. кв. 0',
-      },
       complicatedSomaticHistory: {
         placeholder:
           'ОРВИ, грипп, ангины, 1977-операция на баталловом протоке, хр.гастрит',
@@ -174,6 +171,8 @@ export default class Patient {
       },
       mensesCharacteristics: {
         title: 'Особенности',
+        options: ['нет', 'умеренные', 'обильные', 'задержки'],
+        value: 'нет',
       },
       mensesLast: {
         type: 'date',
@@ -241,8 +240,8 @@ export default class Patient {
         title: 'Дата родов',
       },
       birthTime: {
-        type: 'time',
         title: 'Время родов',
+        type: 'time',
       },
       doctor: {
         title: 'Врач',
@@ -253,22 +252,24 @@ export default class Patient {
       },
       wasInduced: {
         title: 'Индуцированные',
-        options: yesNoOptions,
+        options: ['нет', 'да', 'ЭКО', 'амниотомия '],
+        value: 'нет',
       },
     }
     this.birthAnomalies = {
       header: { value: 'Аномалии родовой деятельности' },
       obstetricWeakness: {
         title: 'Слабость родовой деятельности',
-        options: yesNoOptions,
+        options: ['нет', 'первичная', 'вторичная'],
+        value: 'нет',
       },
       discoordination: {
         title: 'Дискоординация',
-        options: yesNoOptions,
+        options,
       },
       caesarean: {
         title: 'Кесарево сечение',
-        options: yesNoOptions,
+        options,
       },
       birthDuration: {
         title: 'Продолжительность родов',
@@ -288,7 +289,11 @@ export default class Patient {
       },
       prenatalAmnioticFluidLeakage: {
         title: 'Дородовое излитие околоплодных вод',
-        options: yesNoOptions,
+        options,
+      },
+      vigorousLaborActivity: {
+        title: 'Бурная родовая деятельность',
+        options,
       },
       anhydrousGap: {
         title: 'Безводный промежуток',
@@ -296,26 +301,32 @@ export default class Patient {
       },
       narrowPelvis: {
         title: 'Узкий таз',
-        options: yesNoOptions,
+        options: ['нет', 'анатомический узкий таз', 'поперечносуженный таз'],
+        value: 'нет',
       },
       complications: {
         title: 'Осложнения',
-        options: yesNoOptions,
       },
       operations: {
         title: 'Операции',
       },
       amniotomia: {
         title: 'Амниотомия',
-        options: yesNoOptions,
+        options,
       },
       waterColor: {
         title: 'Цвет вод',
-        options: ['светлые', 'темные'],
+        placeholder: 'светлые',
       },
       waterAmount: {
         title: 'Количество вод',
-        options: ['мало', 'умеренно'],
+        options: [
+          'умеренное',
+          'многоводие',
+          'выраженное многоводие',
+          'маловодие',
+        ],
+        value: 'умеренное',
       },
       bloodloss: {
         title: 'Кровопотеря (мл)',
@@ -327,10 +338,10 @@ export default class Patient {
       length: { title: 'Длина', type: 'number' },
       width: { title: 'Ширина', type: 'number' },
       thickness: { title: 'Толщина', type: 'number' },
-      calcinossis: { title: 'Кальциноз', options: yesNoOptions },
+      calcinossis: { title: 'Кальциноз', options: calcinosisOptions },
       fatDegenerations: {
         title: 'Жировые перерождения',
-        options: yesNoOptions,
+        options,
       },
       afterbirthDefect: { title: 'Дефект последа' },
     }
@@ -340,7 +351,8 @@ export default class Patient {
       newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
       newbornLength: { title: 'Длина тела (см)', type: 'number' },
       gender: { title: 'Пол', options: ['м', 'ж'] },
-      headCircumference: { title: 'Окружность головы (см)', type: 'number' },
+      headCircumference1: { title: 'Окружность головы-1 (см)', type: 'number' },
+      headCircumference2: { title: 'Окружность головы-2 (см)', type: 'number' },
       chestCircumference: { title: 'Окружность груди (см)', type: 'number' },
       oneMin: { title: '1 мин', type: 'number' },
       fiveMin: { title: '5 мин', type: 'number' },
@@ -348,12 +360,12 @@ export default class Patient {
         title: 'Неонатальный диагноз',
         placeholder: 'Период новорожденности. Кесарево сечение',
       },
-      prematrue: { title: 'Доношенный', options: yesNoOptions },
-      notPrematrue: { title: 'Недоношенный', options: yesNoOptions },
-      aspyrationSymptome: { title: 'Симптом аспирации', options: yesNoOptions },
+      prematrue: { title: 'Доношенный', options },
+      notPrematrue: { title: 'Недоношенный', options },
+      aspyrationSymptome: { title: 'Симптом аспирации', options },
       SOM: {
         title: 'Задержка внутриутробного развития (ЗВУР)',
-        options: yesNoOptions,
+        options,
       },
       degreeSOM: {
         title: 'Степень',
@@ -370,45 +382,68 @@ export default class Patient {
       },
       umbilicalCordEntanglement: {
         title: 'Обвитие пуповиной',
-        options: yesNoOptions,
       },
       postHypoxicCondition: {
         title: 'Постгипоксическое состояние',
-        options: yesNoOptions,
+        options,
       },
       morphoFunctionalImmaturity: {
         title: 'Морфо-функциональная незрелость',
-        options: yesNoOptions,
+        options,
       },
-      hormonalCrisis: { title: 'Гормональный криз', options: yesNoOptions },
-      yellowing: { title: 'Желтуха', options: yesNoOptions },
-      erythema: { title: 'Эритема', options: yesNoOptions },
+      hormonalCrisis: { title: 'Гормональный криз', options },
+      yellowing: {
+        title: 'Желтуха',
+        options: [...yesNoOptions, 'Тяжелая желтушно-анемическая форма'],
+        value: 'нет',
+      },
+      erythema: {
+        title: 'Эритема',
+        options: [...yesNoOptions, 'токсическая эритема'],
+        value: 'нет',
+      },
       respiratoryDistressSyndrome: {
         title: 'Синдром дыхательных расстройств (СДР)',
-        options: yesNoOptions,
+        options: [
+          'нет',
+          'I степени-купировано',
+          'II степени-купировано',
+          'III степени-купировано',
+          'I степени',
+          'II степени',
+          'III степени',
+        ],
+        value: 'нет',
       },
-      dacryocis: { title: 'Дакриоцис', options: yesNoOptions },
+      dacryocis: { title: 'Дакриоцис', options },
       intrauterineInfections: {
         title: 'Внутриутробные инфекции (ВУИ)',
-        options: yesNoOptions,
+        options: ['нет', 'угроза', 'высокий риск', 'умеренный риск'],
+        value: 'нет',
       },
-      cardiopathies: { title: 'Кардиопатии', options: yesNoOptions },
-      pneumopathology: { title: 'Пневмопатология', options: yesNoOptions },
+      cardiopathies: { title: 'Кардиопатии', options },
+      pneumopathology: { title: 'Пневмопатология', options },
       fetalHemolyticDisease: {
         title: 'Гемолитическая болезнь плода (ГБН)',
-        options: yesNoOptions,
+        options: [
+          'нет',
+          'угроза по АВ0-системе',
+          'угроза по резус-фактору',
+          'угроза по резус-фактору и АВ0-системе',
+        ],
+        value: 'нет',
       },
       сongenitalЬalformations: { title: 'Врожденные пороки развития (ВПР)' },
       congenitalHeartDisease: { title: 'Врожденные пороки сердца (ВПС)' },
-      allergoDermathitis: { title: 'Аллергодерматит', options: yesNoOptions },
+      allergoDermathitis: { title: 'Аллергодерматит', options },
       pelvicDysplasia: {
         title: 'Дисплазия тазового сустава',
-        options: yesNoOptions,
+        options,
       },
-      paresis: { title: 'Парезы', options: yesNoOptions },
+      paresis: { title: 'Парезы', options },
       perinatalEncephalopathy: {
         title: 'Перинатальная энцефалопатиея (ПЭП)',
-        options: yesNoOptions,
+        options,
       },
       encephalopathyDegree: {
         title: 'Степень',
@@ -421,26 +456,27 @@ export default class Patient {
       },
       cordFell: {
         title: 'Пуповина отпала',
-        options: yesNoOptions,
+        options,
       },
       tuberculosisVaccine: {
         title: 'БЦЖ',
-        options: yesNoOptions,
+        options: [...yesNoOptions, 'мед.отвод', 'отказ матери'],
+        value: 'нет',
       },
       healthGroup: {
         title: 'Группа здоровья',
-        options: ['I', 'IIA', 'IIB', 'III', 'IV'],
+        options: ['IА', 'IБ'],
       },
       aro: {
-        title: 'АРО, сутки', // TODO: ?
+        title: 'ОРИТ',
         options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
       },
       home: {
-        title: 'Домой, сутки',
+        title: 'Домой',
         type: 'number',
       },
       hospitalTreatment: {
-        title: 'ОДКБ, сутки',
+        title: 'ОДКБ',
         options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
       },
     }
@@ -534,10 +570,14 @@ export default class Patient {
         title: 'Эпителиальные клетки',
         options: ['немного', 'много'],
       },
-      flora: { title: 'Флора', value: 'б/о' },
+      flora: {
+        title: 'Флора',
+        options: ['бациллярная', 'смешанная', 'б/о', 'кокковая'],
+        value: 'б/о',
+      },
     }
     this.ultrasound1 = {
-      header: { value: 'УЗИ-1 (4-17)' },
+      header: { value: 'УЗИ-1 (11-13+6)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-1',
@@ -557,7 +597,7 @@ export default class Patient {
       fetalEgg: {
         type: 'number',
         title: 'Плодное яйцо',
-        options: [0, 1],
+        options: [1, 2],
       },
       coccygealPerietalFetalSize: {
         type: 'number',
@@ -565,7 +605,8 @@ export default class Patient {
       },
       chorion: {
         title: 'Хорион',
-        options: ['задняя'], // TODO!
+        options: ['передняя', 'задняя'],
+        value: 'передняя',
       },
       cervix: {
         type: 'number',
@@ -573,7 +614,7 @@ export default class Patient {
       },
       pathology: {
         title: 'Патология',
-        placeholder: 'нет',
+        value: 'нет',
       },
     }
     this.ultrasound2 = {
@@ -592,27 +633,27 @@ export default class Patient {
       },
       hypothrophy: {
         title: 'Гипотрофия',
-        placeholder: 'нет',
+        value: 'нет',
       },
       water: {
         title: 'Много/маловодие',
-        placeholder: 'нет',
+        value: 'нет',
       },
       biparietalSize: {
         type: 'number',
         title: 'Бипариетальный размер (БПР)',
       },
       dgk: {
+        title: 'иаметр кости голени (ДГК)',
         type: 'number',
-        title: '(ДГК)', // TODO???
       },
       abdominalDoppler: {
         type: 'number',
         title: 'Доплерография живота (ДЖ)',
       },
       approximateFetalWeight: {
+        title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
-        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
       },
       placenta: {
         type: 'number',
@@ -624,23 +665,23 @@ export default class Patient {
       },
       poorPlacentation: {
         title: 'Низкая плацентация',
-        options: yesNoOptions,
+        options,
       },
       placentAnomalies: {
         title: 'Изменения плаценты',
-        placeholder: 'нет',
+        value: 'нет',
       },
       maturityDegree: {
         title: 'Степень зрелости',
-        options: ['I', 'I-II', 'II', 'II-III', 'III'],
+        options: ['0', 'I', 'I-II', 'II', 'II-III', 'III'],
       },
       calcinosis: {
         title: 'Кальциноз',
-        options: yesNoOptions,
+        options: calcinosisOptions,
       },
       cysts: {
         title: 'Кисты',
-        options: yesNoOptions,
+        options,
       },
       fetalHearthRate: {
         title: 'ЧСС плода',
@@ -675,7 +716,7 @@ export default class Patient {
       },
       fetalCordEntanglement: {
         title: 'Обвитие пуповиной плода',
-        options: yesNoOptions,
+        options,
       },
       fetalPathology: {
         title: 'Патология плода',
@@ -683,7 +724,7 @@ export default class Patient {
       },
     }
     this.ultrasound3 = {
-      header: { value: 'УЗИ-3 (36-40)' },
+      header: { value: 'УЗИ-3 (30-34)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-3',
@@ -709,7 +750,7 @@ export default class Patient {
         type: 'number',
       },
       dgk: {
-        title: '(ДГК)', // TODO???
+        title: 'Диаметр кости голени (ДГК)',
         type: 'number',
       },
       femurLength: {
@@ -721,7 +762,7 @@ export default class Patient {
         type: 'number',
       },
       approximateFetalWeight: {
-        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
+        title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
       },
       placenta: {
@@ -734,11 +775,11 @@ export default class Patient {
       },
       poorPlacentation: {
         title: 'Низкая плацентация',
-        options: yesNoOptions,
+        options,
       },
       placentAnomalies: {
         title: 'Изменения плаценты',
-        placeholder: 'нет',
+        value: 'нет',
       },
       maturityDegree: {
         type: 'number',
@@ -747,11 +788,11 @@ export default class Patient {
       },
       calcinosis: {
         title: 'Кальциноз',
-        options: yesNoOptions,
+        options: calcinosisOptions,
       },
       cysts: {
         title: 'кисты',
-        options: yesNoOptions,
+        options,
       },
       fetalHearthRate: {
         title: 'ЧСС плода',
@@ -786,15 +827,15 @@ export default class Patient {
       },
       fetalCordEntanglement: {
         title: 'Обвитие пуповиной плода',
-        options: yesNoOptions,
+        options,
       },
       fetalPathology: {
         title: 'Патология плода',
-        placeholder: 'нет',
+        value: 'нет',
       },
     }
     this.ultrasound4 = {
-      header: { value: 'УЗИ-4 (36-40)' },
+      header: { value: 'УЗИ-4 (35-40)' },
       ultrasoundDate: {
         type: 'date',
         title: 'Дата УЗИ-4',
@@ -820,7 +861,7 @@ export default class Patient {
         type: 'number',
       },
       dgk: {
-        title: '(ДГК)', // TODO???
+        title: 'Диаметр кости голени (ДГК)',
         type: 'number',
       },
       femurLength: {
@@ -832,7 +873,7 @@ export default class Patient {
         type: 'number',
       },
       approximateFetalWeight: {
-        title: 'Приблизительный вес плода (ПВП) - г', // TODO???
+        title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
       },
       placenta: {
@@ -845,11 +886,11 @@ export default class Patient {
       },
       poorPlacentation: {
         title: 'Низкая плацентация',
-        options: yesNoOptions,
+        options,
       },
       placentAnomalies: {
         title: 'Изменения плаценты',
-        placeholder: 'нет',
+        value: 'нет',
       },
       maturityDegree: {
         type: 'number',
@@ -858,11 +899,11 @@ export default class Patient {
       },
       calcinosis: {
         title: 'Кальциноз',
-        options: yesNoOptions,
+        options: calcinosisOptions,
       },
       cysts: {
         title: 'кисты',
-        options: yesNoOptions,
+        options,
       },
       fetalHearthRate: {
         title: 'ЧСС плода',
@@ -897,11 +938,11 @@ export default class Patient {
       },
       fetalCordEntanglement: {
         title: 'Обвитие пуповиной плода',
-        options: yesNoOptions,
+        options,
       },
       fetalPathology: {
         title: 'Патология плода',
-        placeholder: 'нет',
+        value: 'нет',
       },
     }
   }
