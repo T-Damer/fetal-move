@@ -126,8 +126,6 @@ export default class Patient {
         title: 'Вредные привычки',
       },
       drugs: {
-        type: 'number',
-        options,
         title: 'Лекарства',
       },
       complicatedSomaticHistory: {

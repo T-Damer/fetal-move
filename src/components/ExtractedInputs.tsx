@@ -1,5 +1,7 @@
 import { OnChange } from 'types/FormEvent'
 import { OnChangeInput } from 'types/OnInputChangeProps'
+import { useAutoAnimate } from '@formkit/auto-animate/preact'
+import { useState } from 'preact/hooks'
 import DateInput from 'components/DateInput'
 import Patient, { CommonContent } from 'types/Patient'
 
@@ -49,40 +51,55 @@ function ProcessedInput({
 }
 
 export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
-  const elements = Object.entries(currentPatient).map(([headerId, data]) => (
-    <>
-      <h2 id={headerId} className="underline text-right">
-        {data.header.value}
-      </h2>
-      {Object.entries(data).map(([inputKey, inputValue], index) => {
-        const input = inputValue as CommonContent
+  const elements = Object.entries(currentPatient).map(
+    ([headerId, data], index) => {
+      const [parent] = useAutoAnimate()
+      const [collapsed, setCollapsed] = useState(!!index)
 
-        if (!index || !input?.title) return null
-        const { type = 'string' } = input
+      return (
+        <>
+          <h2
+            id={headerId}
+            className="text-right hover:opacity-70 active:opacity-50 transition-opacity cursor-pointer"
+            onClick={() => setCollapsed((prev) => !prev)}
+          >
+            {data.header.value} {collapsed ? '+' : '-'}
+          </h2>
+          <section ref={parent}>
+            {collapsed
+              ? null
+              : Object.entries(data).map(([inputKey, inputValue], index) => {
+                  const input = inputValue as CommonContent
 
-        return (
-          <label class="form-control w-full my-2">
-            <b>{input.title}</b>
-            <ProcessedInput
-              input={input}
-              onChange={({ currentTarget }) =>
-                onChange({
-                  value:
-                    type === 'date'
-                      ? currentTarget.value
-                      : type === 'number'
-                        ? currentTarget.valueAsNumber
-                        : currentTarget.value,
-                  headerId,
-                  inputKey,
-                })
-              }
-            />
-          </label>
-        )
-      })}
-    </>
-  ))
+                  if (!index || !input?.title) return null
+                  const { type = 'string' } = input
+
+                  return (
+                    <label class="form-control w-full my-2">
+                      <b>{input.title}</b>
+                      <ProcessedInput
+                        input={input}
+                        onChange={({ currentTarget }) =>
+                          onChange({
+                            value:
+                              type === 'date'
+                                ? currentTarget.value
+                                : type === 'number'
+                                  ? currentTarget.valueAsNumber
+                                  : currentTarget.value,
+                            headerId,
+                            inputKey,
+                          })
+                        }
+                      />
+                    </label>
+                  )
+                })}
+          </section>
+        </>
+      )
+    }
+  )
 
   return <>{elements}</>
 }
