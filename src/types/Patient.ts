@@ -110,6 +110,7 @@ export default class Patient {
       weight: {
         type: 'number',
         title: 'Вес матери',
+        step: 0.1,
       },
       worksAt: {
         title: 'Работа',
@@ -209,10 +210,19 @@ export default class Patient {
         type: 'number',
         title: 'Предположительный вес плода (ПВП) (г)',
       },
-      Dsp: { type: 'number', title: 'D.sp' },
-      Dcr: { type: 'number', title: 'D.cr' },
-      Dtr: { type: 'number', title: 'D.tr' },
-      Conext: { type: 'number', title: 'Con.ext' },
+      Dsp: { type: 'number', title: 'Distantia spinarum (межостный размер)' },
+      Dcr: {
+        title: 'Distantia cristarum (межгребенчатый размер)',
+        type: 'number',
+      },
+      Dtr: {
+        title: 'Distantia trochanterica (межвертельный размер)',
+        type: 'number',
+      },
+      Conext: {
+        title: 'Conjugata externa (наружняя конъюгата)',
+        type: 'number',
+      },
       firstHalf: {
         title: 'I половина',
         placeholder:

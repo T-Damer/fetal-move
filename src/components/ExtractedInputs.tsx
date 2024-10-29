@@ -38,12 +38,9 @@ function ProcessedInput({
 
   return (
     <input
-      value={value}
-      min="0"
-      type={type}
-      onInput={onChange}
-      placeholder={input.placeholder || '---'}
       className="placeholder:text-opacity-30 placeholder:text-slate-500 input input-bordered"
+      placeholder={input.placeholder || '---'}
+      {...input}
     >
       {value}
     </input>
