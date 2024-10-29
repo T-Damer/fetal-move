@@ -697,30 +697,18 @@ export default class Patient {
       },
       resistanceIndexLeftUterineArteria: {
         title: 'Индекс резистентности (ИР) маточной левой артерии',
-        type: 'number',
-        step: 0.01,
       },
       resistanceIndexRightUterineArteria: {
         title: 'Индекс резистентности (ИР) маточной правой артерии',
-        type: 'number',
-        step: 0.01,
       },
       normalUterineResistanceIndex: {
         title: 'Норма ИР маточной артерии',
-        type: 'number',
-        step: 0.01,
-        value: 0.59,
       },
       ubmilicalAteriaResistanceIndex: {
         title: 'ИР артерии пуповины',
-        type: 'number',
-        step: 0.01,
       },
       normalUmbilicalRestanceIndex: {
         title: 'Норма ИР артерии пуповины',
-        type: 'number',
-        step: 0.01,
-        value: 0.73,
       },
       fetalCordEntanglement: {
         title: 'Обвитие пуповиной плода',
@@ -807,29 +795,19 @@ export default class Patient {
         type: 'number',
       },
       resistanceIndexLeftUterineArteria: {
-        type: 'number',
-        step: 0.01,
         title: 'Индекс резистентности (ИР) маточной левой артерии',
       },
       resistanceIndexRightUterineArteria: {
-        type: 'number',
-        step: 0.01,
         title: 'Индекс резистентности (ИР) маточной правой артерии',
       },
       normalUterineResistanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'Норма ИР маточной артерии',
         placeholder: '0.34 - 0.61',
       },
       ubmilicalAteriaResistanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'ИР артерии пуповины',
       },
       normalUmbilicalRestanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'Норма ИР артерии пуповины',
         placeholder: '0.52 - 0.75',
       },
@@ -918,29 +896,19 @@ export default class Patient {
         type: 'number',
       },
       resistanceIndexLeftUterineArteria: {
-        type: 'number',
-        step: 0.01,
         title: 'Индекс резистентности (ИР) маточной левой артерии',
       },
       resistanceIndexRightUterineArteria: {
-        type: 'number',
-        step: 0.01,
         title: 'Индекс резистентности (ИР) маточной правой артерии',
       },
       normalUterineResistanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'Норма ИР маточной артерии',
         placeholder: '0.34 - 0.61',
       },
       ubmilicalAteriaResistanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'ИР артерии пуповины',
       },
       normalUmbilicalRestanceIndex: {
-        type: 'number',
-        step: 0.01,
         title: 'Норма ИР артерии пуповины',
         placeholder: '0.52 - 0.75',
       },
