@@ -17,10 +17,11 @@ export default function ({
 
   return (
     <Card onPress={onPress}>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center overflow-hidden">
         <span className="font-bold truncate-2 leading-snug">
           {historySerial}
         </span>
+        <span className="text-gray-200 truncate">{id}</span>
       </div>
     </Card>
   )

@@ -53,10 +53,10 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
     const [collapsed, setCollapsed] = useState(false)
 
     return (
-      <>
+      <div className="relative">
         <h2
           id={headerId}
-          className="text-right hover:opacity-70 active:opacity-50 transition-opacity cursor-pointer"
+          className="sticky top-0 py-4 bg-base-100 text-right hover:opacity-70 active:opacity-50 transition-opacity cursor-pointer z-10"
           onClick={() => setCollapsed((prev) => !prev)}
         >
           {data.header.value} {collapsed ? '+' : '-'}
@@ -92,7 +92,7 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
                 )
               })}
         </section>
-      </>
+      </div>
     )
   })
 
