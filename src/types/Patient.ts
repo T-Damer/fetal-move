@@ -355,6 +355,10 @@ export default class Patient {
     }
     this.newborn = {
       header: { value: 'Новорожденный' },
+      warning: {
+        value:
+          '⚠️ Если плодов несколько, то скопируйте историю и измените эту часть',
+      },
       postpartumPeriod: { title: 'Течение послеродового периода' },
       newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
       newbornLength: { title: 'Длина тела (см)', type: 'number' },

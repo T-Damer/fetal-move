@@ -61,6 +61,9 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
         >
           {data.header.value} {collapsed ? '+' : '-'}
         </h2>
+
+        {data.warning?.value ? <span>{data.warning.value}</span> : null}
+
         <section ref={parent}>
           {collapsed
             ? null
