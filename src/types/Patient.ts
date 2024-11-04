@@ -359,9 +359,9 @@ export default class Patient {
       newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
       newbornLength: { title: 'Длина тела (см)', type: 'number' },
       gender: { title: 'Пол', options: ['м', 'ж'] },
-      headCircumference1: { title: 'Окружность головы-1 (см)', type: 'number' },
-      headCircumference2: { title: 'Окружность головы-2 (см)', type: 'number' },
-      chestCircumference: { title: 'Окружность груди (см)', type: 'number' },
+      headCircumference: { title: 'Окружность головы (см)', type: 'number' },
+      chestCircumference1: { title: 'Окружность груди-1 (см)', type: 'number' },
+      chestCircumference2: { title: 'Окружность груди-2 (см)', type: 'number' },
       oneMin: { title: '1 мин', type: 'number' },
       fiveMin: { title: '5 мин', type: 'number' },
       neonatalDiagnosis: {
@@ -473,19 +473,19 @@ export default class Patient {
       },
       healthGroup: {
         title: 'Группа здоровья',
-        options: ['IА', 'IБ'],
+        options: ['IА', 'IБ', 'IIА', 'IIБ'],
       },
       aro: {
         title: 'ОРИТ',
-        options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
+        options: yesNoOptions,
       },
       home: {
         title: 'Домой',
-        type: 'number',
+        options: yesNoOptions,
       },
       hospitalTreatment: {
         title: 'ОДКБ',
-        options: ['нет', '1', '2', '3', '4', '5', '6', '7'],
+        options: yesNoOptions,
       },
     }
     this.generalBloodTest = {
