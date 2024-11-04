@@ -9,7 +9,7 @@ import Main from 'screens/Main'
 
 export default function () {
   return (
-    <div className="flex flex-col container min-h-[100dvh] mx-auto p-5 md:p-10 prose">
+    <div className="flex flex-col container prose print:w-full min-h-[100dvh] mx-auto p-5 md:p-10">
       <Router hook={useHashLocation}>
         <ErrorBoundary fallback={<ErrorFallback />}>
           <Switch>

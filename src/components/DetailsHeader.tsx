@@ -5,7 +5,7 @@ import goMain from 'helpers/goMain'
 
 export default function ({ deleteEntry }: { deleteEntry: () => void }) {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center print:hidden">
       <Button onClick={goMain}>◄</Button>
 
       <Button buttonType={ButtonTypes.error} onClick={deleteEntry}>

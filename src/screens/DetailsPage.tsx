@@ -76,7 +76,7 @@ export default function ({ id }: { id: string }) {
 
       <ExtractedInputs currentPatient={currentPatient} onChange={onChange} />
 
-      <div className="flex flex-row gap-x-2 sticky bottom-safe-bottom">
+      <div className="flex flex-row gap-x-2 sticky bottom-safe-bottom print:hidden">
         <Button
           buttonType={ButtonTypes.success}
           onClick={saveAndExport}
