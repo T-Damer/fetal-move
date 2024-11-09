@@ -26,19 +26,23 @@ function constructCsv(dataObjToWrite: Patient) {
 
 export async function shareFile(filename: string, dataObjToWrite: Patient) {
   const csv = constructCsv(dataObjToWrite)
-  const blob = new File([csv], filename, { type: 'text/csv' })
+  const blob = new File([csv], filename, { type: 'text/csv;charset=utf-8;' })
 
   await navigator.share({ title: filename, files: [blob] })
 }
 
 export default function (filename: string, dataObjToWrite: Patient) {
   const csv = constructCsv(dataObjToWrite)
-  const blob = new Blob([csv], { type: 'text/csv' })
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
   const link = document.createElement('a')
 
   link.download = filename
   link.href = window.URL.createObjectURL(blob)
-  link.dataset['downloadurl'] = ['text/csv', link.download, link.href].join(':')
+  link.dataset['downloadurl'] = [
+    'text/csv;charset=utf-8;',
+    link.download,
+    link.href,
+  ].join(':')
 
   const evt = new MouseEvent('click', {
     view: window,

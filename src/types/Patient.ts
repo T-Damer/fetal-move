@@ -1,6 +1,15 @@
 const options = [0, 1]
 const calcinosisOptions = ['нет', 'да', 'выраженный кальциноз']
 const yesNoOptions = ['нет', 'да']
+const ctgObject = {
+  date: { title: 'Дата', type: 'date' as InputType },
+  ctgType: {
+    title: 'Тип КТГ',
+    options: ['нормальный', 'сомнительный', 'патологический'],
+    value: 'нормальный',
+  },
+  ctgReport: { title: 'Заключение КТГ' },
+}
 
 // we can't store Date in localstore, it will convert into string
 // so we use string types from <input type="" />
@@ -31,6 +40,9 @@ export default class Patient {
   obstetric: CommonData
   pregnancy: CommonData
   birth: CommonData
+  cardiotocography1: CommonData
+  cardiotocography2: CommonData
+  cardiotocography3: CommonData
   birthAnomalies: CommonData
   afterbirth: CommonData
   newborn: CommonData
@@ -264,6 +276,10 @@ export default class Patient {
         value: 'нет',
       },
     }
+    this.cardiotocography1 = { header: { value: 'КТГ-1' }, ...ctgObject }
+    this.cardiotocography2 = { header: { value: 'КТГ-2' }, ...ctgObject }
+    this.cardiotocography3 = { header: { value: 'КТГ-3' }, ...ctgObject }
+
     this.birthAnomalies = {
       header: { value: 'Аномалии родовой деятельности' },
       obstetricWeakness: {
@@ -490,6 +506,9 @@ export default class Patient {
       hospitalTreatment: {
         title: 'ОДКБ',
         options: yesNoOptions,
+      },
+      partogram: {
+        title: 'Партограмма',
       },
     }
     this.generalBloodTest = {
