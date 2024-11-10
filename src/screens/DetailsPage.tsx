@@ -11,7 +11,7 @@ import Save from 'components/Icons/Save'
 import Share from 'components/Icons/Share'
 import handleError from 'helpers/handleError'
 import patientsDataStore from 'atoms/patientsDataStore'
-import saveObjectAsJson, { shareFile } from 'helpers/saveObjectAsJson'
+import saveObjectAsXlsx, { shareXlsx } from 'helpers/saveObjectAsXlsx'
 
 export default function ({ id }: { id: string }) {
   const [patientsData, setPatientsData] = useAtom(patientsDataStore)
@@ -59,13 +59,13 @@ export default function ({ id }: { id: string }) {
     [currentPatient, id, setPatientsData]
   )
 
-  const fileName = `ИР-${currentPatient.passport.historySerial.value}.csv`
+  const fileName = `ИР-${currentPatient.passport.historySerial.value}`
 
   const saveAndExport = useCallback(() => {
-    saveObjectAsJson(fileName, currentPatient)
+    saveObjectAsXlsx(fileName, currentPatient)
   }, [currentPatient, fileName])
   const share = useCallback(() => {
-    void shareFile(fileName, currentPatient)
+    void shareXlsx(fileName, currentPatient)
   }, [currentPatient, fileName])
 
   if (!currentPatient) return <NotFound />
