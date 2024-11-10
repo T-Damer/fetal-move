@@ -6,27 +6,21 @@ import { saveAs } from 'file-saver'
 const fileType =
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
 const fileExtension = '.xlsx'
+export const sheetName = 'data'
 
 function createXlsxBlob(data: Patient) {
   const { titles, values } = constructCsv(data)
   const workSheet = utils.aoa_to_sheet([titles, values])
   const workBook: WorkBook = {
-    Sheets: { data: workSheet, cols: [] },
-    SheetNames: ['data'],
+    Sheets: { data: workSheet },
+    SheetNames: [sheetName],
   }
   const excelBuffer = write(workBook, { bookType: 'xlsx', type: 'array' })
-  return new Blob([excelBuffer], { type: fileType })
-}
-
-export async function shareXlsx(fileName: string, data: Patient) {
-  const fileData = createXlsxBlob(data)
-  const file = new File([fileData], fileName, { type: fileType })
-
-  await navigator.share({ title: fileName, files: [file] })
+  return { blob: new Blob([excelBuffer], { type: fileType }) }
 }
 
 export default function (fileName: string, data: Patient) {
-  const fileData = createXlsxBlob(data)
+  const { blob } = createXlsxBlob(data)
 
-  saveAs(fileData, fileName + fileExtension)
+  saveAs(blob, fileName + fileExtension)
 }

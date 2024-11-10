@@ -5,6 +5,7 @@ import Button from 'components/Button'
 import patientsDataStore from 'atoms/patientsDataStore'
 import { useAtom, useAtomValue } from 'jotai'
 import handleError from 'helpers/handleError'
+import scrollTop from 'helpers/scrollTop'
 
 export default function ({
   id,
@@ -18,6 +19,7 @@ export default function ({
 
   const onPress = useCallback(() => {
     setLocation(`/patient/${id}`)
+    scrollTop()
   }, [id, setLocation])
 
   const onCopy = useCallback(() => {
@@ -37,14 +39,16 @@ export default function ({
 
   return (
     <Card>
-      <div className="flex flex-col justify-between overflow-hidden">
+      <div className="flex flex-col justify-between overflow-hidden w-full">
         <div className="flex-1 flex flex-col" onClick={onPress}>
           <span className="font-bold truncate-2 leading-snug">
             {historySerial}
           </span>
-          <span className="text-gray-200 truncate">{id}</span>
+          <span className="text-[#00000080] dark:text-[#FFFFFF80] truncate">
+            {id}
+          </span>
         </div>
-        <Button alt="Копировать" onClick={onCopy}>
+        <Button alt="Копировать" onClick={onCopy} className="w-full">
           Копировать
         </Button>
       </div>

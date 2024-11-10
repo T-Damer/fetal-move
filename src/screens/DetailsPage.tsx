@@ -11,7 +11,9 @@ import Save from 'components/Icons/Save'
 import Share from 'components/Icons/Share'
 import handleError from 'helpers/handleError'
 import patientsDataStore from 'atoms/patientsDataStore'
-import saveObjectAsXlsx, { shareXlsx } from 'helpers/saveObjectAsXlsx'
+import saveObjectAsXlsx from 'helpers/saveObjectAsXlsx'
+import ArrowUp from 'components/Icons/ArrowUp'
+import scrollTop from 'helpers/scrollTop'
 
 export default function ({ id }: { id: string }) {
   const [patientsData, setPatientsData] = useAtom(patientsDataStore)
@@ -64,9 +66,6 @@ export default function ({ id }: { id: string }) {
   const saveAndExport = useCallback(() => {
     saveObjectAsXlsx(fileName, currentPatient)
   }, [currentPatient, fileName])
-  const share = useCallback(() => {
-    void shareXlsx(fileName, currentPatient)
-  }, [currentPatient, fileName])
 
   if (!currentPatient) return <NotFound />
 
@@ -76,22 +75,22 @@ export default function ({ id }: { id: string }) {
 
       <ExtractedInputs currentPatient={currentPatient} onChange={onChange} />
 
-      <div className="flex flex-row gap-x-2 sticky bottom-safe-bottom z-20 print:hidden">
+      <div className="flex flex-row w-full gap-x-2 sticky bottom-safe-bottom z-20 print:hidden drop-shadow-md">
         <Button
           buttonType={ButtonTypes.success}
           onClick={saveAndExport}
-          className="w-1/2"
+          className="w-2/3"
           iconRight={<Save />}
         >
           Сохранить
         </Button>
+
         <Button
           buttonType={ButtonTypes.success}
-          onClick={share}
-          className="w-1/2"
-          iconRight={<Share />}
+          onClick={scrollTop}
+          className="w-1/3"
         >
-          Поделиться
+          <ArrowUp />
         </Button>
       </div>
     </div>

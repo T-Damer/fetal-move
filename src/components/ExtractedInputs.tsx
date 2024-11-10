@@ -19,7 +19,7 @@ function ProcessedInput({
 }) {
   const { options, value, type } = input
 
-  if (options)
+  if (options?.length)
     return (
       <select
         class="select select-bordered select-xs "
@@ -40,6 +40,7 @@ function ProcessedInput({
     <input
       className="placeholder:text-opacity-30 placeholder:text-slate-500 input input-bordered"
       placeholder={input.placeholder || '---'}
+      onInput={onChange}
       {...input}
     >
       {value}
@@ -78,7 +79,7 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
                     <b>{input.title}</b>
                     <ProcessedInput
                       input={input}
-                      onChange={({ currentTarget }) =>
+                      onChange={({ currentTarget }) => {
                         onChange({
                           value:
                             type === 'date'
@@ -89,7 +90,7 @@ export default function ({ currentPatient, onChange }: ExtractedInputsProps) {
                           headerId,
                           inputKey,
                         })
-                      }
+                      }}
                     />
                   </label>
                 )

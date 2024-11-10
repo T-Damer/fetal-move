@@ -911,7 +911,7 @@ export default class Patient {
         options: calcinosisOptions,
       },
       cysts: {
-        title: 'кисты',
+        title: 'Кисты',
         options,
       },
       fetalHearthRate: {
