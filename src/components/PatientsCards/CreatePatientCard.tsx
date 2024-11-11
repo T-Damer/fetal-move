@@ -9,6 +9,7 @@ import handleError from 'helpers/handleError'
 import nameToDataStore from 'atoms/patientsDataStore'
 import { read, utils } from 'xlsx'
 import patientsDataStore from 'atoms/patientsDataStore'
+import importXlsxPatient from 'helpers/importXlsxPatient'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()
@@ -93,55 +94,11 @@ function ImportPatient() {
     <div className="flex flex-col gap-2 justify-center">
       <input
         type="file"
+        accept=".xls,.xlsx"
         class="file-input file-input-bordered w-full"
         onInput={async (e) => {
-          const file = e.currentTarget?.files?.[0]
-
-          if (!file) {
-            const e = 'Не получилось загрузить файл'
-            handleError({ e, toastMessage: e })
-            return
-          }
-
-          const data = await file.arrayBuffer()
-          const workBook = read(data)
-          const workSheet = workBook.Sheets[workBook.SheetNames[0]]
-          const result = utils.sheet_to_json(workSheet)
-          const parsedHistory = result[0] as { [title: string]: string }
-
-          const serial = parsedHistory['№ Истории']
-
-          if (!serial) {
-            const e = 'Неправильный формат файла или нету номера истории'
-            handleError({ e, toastMessage: e })
-            return
-          }
-
-          console.log(parsedHistory)
-
-          const newPatient = new Patient(Number(serial))
-          for (const [title, value] of Object.entries(parsedHistory)) {
-            // Iterate over Patient properties, find the field with a matching title
-            for (const sectionKey in newPatient) {
-              const section = newPatient[sectionKey as keyof Patient]
-              if (section && typeof section === 'object') {
-                // Iterate through each property in the section
-                for (const fieldKey in section) {
-                  const field = section[fieldKey as keyof typeof section]
-                  if (
-                    field &&
-                    typeof field === 'object' &&
-                    'title' in field &&
-                    field.title === title
-                  ) {
-                    field.value = value
-                    break
-                  }
-                }
-              }
-            }
-          }
-
+          const newPatient = await importXlsxPatient(e)
+          if (!newPatient) return
           setParsedResult(newPatient)
         }}
       />
