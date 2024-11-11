@@ -6,8 +6,11 @@ import DetailsPage from 'screens/DetailsPage'
 import ErrorFallback from 'components/ErrorFallback'
 import Footer from 'components/Footer'
 import Main from 'screens/Main'
+import useTheme from 'hooks/useTheme'
 
 export default function () {
+  const theme = useTheme()
+
   return (
     <div className="flex flex-col container prose print:w-full min-h-[100dvh] mx-auto my-5 px-5 md:p-10">
       <Router hook={useHashLocation}>
@@ -24,7 +27,7 @@ export default function () {
           <Footer />
         </ErrorBoundary>
       </Router>
-      <ToastContainer />
+      <ToastContainer theme={theme} />
     </div>
   )
 }

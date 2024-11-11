@@ -8,6 +8,7 @@ import Patient from 'types/Patient'
 import handleError from 'helpers/handleError'
 import nameToDataStore from 'atoms/patientsDataStore'
 import { read, utils } from 'xlsx'
+import patientsDataStore from 'atoms/patientsDataStore'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()
@@ -74,15 +75,26 @@ function AddPatientForm() {
 }
 
 function ImportPatient() {
-  const [fileReady, setFileReady] = useState<boolean>(false)
-  const onClick = useCallback(() => {}, [])
+  const setPatients = useSetAtom(patientsDataStore)
+  const [parsedResult, setParsedResult] = useState<Patient | null>(null)
+  const onClick = useCallback(() => {
+    if (!parsedResult) return
+
+    const rand = crypto.randomUUID()
+    console.log(rand)
+
+    setPatients((prev) => ({
+      ...prev,
+      [rand]: parsedResult,
+    }))
+  }, [parsedResult])
 
   return (
     <div className="flex flex-col gap-2 justify-center">
       <input
         type="file"
         class="file-input file-input-bordered w-full"
-        onInput={(e) => {
+        onInput={async (e) => {
           const file = e.currentTarget?.files?.[0]
 
           if (!file) {
@@ -91,35 +103,52 @@ function ImportPatient() {
             return
           }
 
-          const reader = new FileReader()
-          reader.onload = (event) => {
-            const data = event.target?.result
-            const workbook = read(data, {
-              type: 'array',
-            })
+          const data = await file.arrayBuffer()
+          const workBook = read(data)
+          const workSheet = workBook.Sheets[workBook.SheetNames[0]]
+          const result = utils.sheet_to_json(workSheet)
+          const parsedHistory = result[0] as { [title: string]: string }
 
-            const name = workbook.SheetNames[0]
-            console.log(workbook.Sheets[name])
-            console.log(workbook.Sheets[name]['A1'])
+          const serial = parsedHistory['№ Истории']
 
-            const sheetData = utils.sheet_to_json(workbook.Sheets[name], {
-              header: 1,
-              defval: '-',
-            })
-
-            console.log(sheetData)
+          if (!serial) {
+            const e = 'Неправильный формат файла или нету номера истории'
+            handleError({ e, toastMessage: e })
+            return
           }
-          reader.onerror = (e) => {
-            handleError({ e, toastMessage: 'Ошибка загрузки файла 💾' })
+
+          console.log(parsedHistory)
+
+          const newPatient = new Patient(Number(serial))
+          for (const [title, value] of Object.entries(parsedHistory)) {
+            // Iterate over Patient properties, find the field with a matching title
+            for (const sectionKey in newPatient) {
+              const section = newPatient[sectionKey as keyof Patient]
+              if (section && typeof section === 'object') {
+                // Iterate through each property in the section
+                for (const fieldKey in section) {
+                  const field = section[fieldKey as keyof typeof section]
+                  if (
+                    field &&
+                    typeof field === 'object' &&
+                    'title' in field &&
+                    field.title === title
+                  ) {
+                    field.value = value
+                    break
+                  }
+                }
+              }
+            }
           }
-          reader.readAsDataURL(file)
-          setFileReady(true)
+
+          setParsedResult(newPatient)
         }}
       />
       <Button
         buttonType={ButtonTypes.success}
         onClick={onClick}
-        disabled={!fileReady}
+        disabled={!parsedResult}
       >
         Загрузить
       </Button>
@@ -132,6 +161,9 @@ export default function () {
     <div className="w-full flex flex-col sm:flex-row gap-2">
       <Card dashedOutline>
         <AddPatientForm />
+      </Card>
+      <Card dashedOutline>
+        <ImportPatient />
       </Card>
     </div>
   )
