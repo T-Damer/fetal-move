@@ -121,6 +121,7 @@ export default class Patient {
       height: {
         type: 'number',
         title: 'Рост матери',
+        step: 0.1,
       },
       weight: {
         type: 'number',
@@ -133,13 +134,11 @@ export default class Patient {
       },
       livingConditions: {
         title: 'Социально-бытовые условия',
-        type: 'number',
         options,
         value,
       },
       badHabits: {
         title: 'Вредные привычки',
-        type: 'number',
         options,
         value,
       },
@@ -229,6 +228,7 @@ export default class Patient {
       estimatedFetalWeight: {
         type: 'number',
         title: 'Предположительный вес плода (ПВП) (г)',
+        step: 0.1,
       },
       Dsp: { type: 'number', title: 'Distantia spinarum (межостный размер)' },
       Dcr: {
@@ -394,7 +394,11 @@ export default class Patient {
           '⚠️ Если плодов несколько, то скопируйте историю и измените эту часть',
       },
       postpartumPeriod: { title: 'Течение послеродового периода' },
-      newbornWeight: { title: 'Вес новорожденного (г)', type: 'number' },
+      newbornWeight: {
+        title: 'Вес новорожденного (г)',
+        type: 'number',
+        step: 0.1,
+      },
       newbornLength: { title: 'Длина тела (см)', type: 'number' },
       gender: { title: 'Пол', options: ['м', 'ж'], value: 'м' },
       headCircumference: { title: 'Окружность головы (см)', type: 'number' },
@@ -718,6 +722,7 @@ export default class Patient {
       approximateFetalWeight: {
         title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
+        step: 0.1,
       },
       placenta: {
         type: 'number',
@@ -822,6 +827,7 @@ export default class Patient {
       approximateFetalWeight: {
         title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
+        step: 0.1,
       },
       placenta: {
         title: 'Плацента/мм2',
@@ -930,6 +936,7 @@ export default class Patient {
       approximateFetalWeight: {
         title: 'Приблизительный вес плода (ПВП) - г',
         type: 'number',
+        step: 0.1,
       },
       placenta: {
         title: 'Плацента/мм2',
