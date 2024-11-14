@@ -14,7 +14,7 @@ export default function (dataObjToWrite: Patient) {
     Object.values(dataObjToWrite[headerId as keyof Patient]).forEach((data) => {
       const { title, value } = data as CommonContent
       if (!title) return
-      const safeValue = value ? String(value) : '-'
+      const safeValue = value === undefined ? '-' : String(value)
 
       titles.push(title)
       values.push(String(safeValue))

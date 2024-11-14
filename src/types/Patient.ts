@@ -592,7 +592,7 @@ export default class Patient {
       },
       thymolTest: {
         title: 'Тимоловая проба',
-        options: ['нет', '-', '+'],
+        options: ['нет', '−', '+'],
         value: 'нет',
       },
       urea: { title: 'Мочевина', type: 'number', step: 0.1 },
