@@ -414,7 +414,7 @@ export default class Patient {
       notPrematrue: { title: 'Недоношенный', options, value },
       aspyrationSymptome: { title: 'Симптом аспирации', options, value },
       SOM: {
-        title: 'Задержка внутриутробного развития (ЗВУР)',
+        title: 'Задержка роста плода (ЗРП)',
         options,
         value,
       },
@@ -712,7 +712,7 @@ export default class Patient {
         title: 'Бипариетальный размер (БПР)',
       },
       dgk: {
-        title: 'иаметр кости голени (ДГК)',
+        title: 'Диаметр кости голени (ДГК)',
         type: 'number',
       },
       abdominalDoppler: {
@@ -800,8 +800,8 @@ export default class Patient {
         options: ['Головное', 'Тазовое'],
         value: 'Головное',
       },
-      hypothrophy: {
-        title: 'Гипотрофия',
+      SOM: {
+        title: 'Задержка роста плода (ЗРП)',
         value,
       },
       water: {
@@ -909,8 +909,8 @@ export default class Patient {
         options: ['Головное', 'Тазовое'],
         value: 'Головное',
       },
-      hypothrophy: {
-        title: 'Гипотрофия',
+      SOM: {
+        title: 'Задержка роста плода (ЗРП)',
         value,
       },
       water: {
