@@ -8,8 +8,29 @@ import Footer from 'components/Footer'
 import Main from 'screens/Main'
 import useTheme from 'hooks/useTheme'
 
+declare global {
+  interface Window {
+    Telegram: any
+  }
+}
+
 export default function () {
   const theme = useTheme()
+
+  if (window.Telegram)
+    return (
+      <div className="flex flex-col container prose h-[100dvh] mx-auto justify-center font-bold px-4">
+        <p>
+          Пожалуйста используйте браузерную версию приложения, телеграм не
+          позволяет сохранять файлы
+        </p>
+        <p>Для этого нажмите три точки сверху справа и "Открыть в" браузере</p>
+        <p>
+          Истории сохраненные в телеграме не переносятся в браузер и ими нельзя
+          поделиться
+        </p>
+      </div>
+    )
 
   return (
     <div className="flex flex-col container prose print:w-full min-h-[100dvh] mx-auto my-5 px-5 md:p-10">
