@@ -10,14 +10,20 @@ import useTheme from 'hooks/useTheme'
 
 declare global {
   interface Window {
-    Telegram: any
+    TelegramWebviewProxy: any
+    TelegramWebviewProxyProto: any
+    TelegramWebview: any
   }
 }
 
 export default function () {
   const theme = useTheme()
 
-  if (window.Telegram)
+  if (
+    window.TelegramWebviewProxy ||
+    window.TelegramWebviewProxyProto ||
+    window.TelegramWebview
+  )
     return (
       <div className="flex flex-col container prose h-[100dvh] mx-auto justify-center font-bold px-4">
         <p>
