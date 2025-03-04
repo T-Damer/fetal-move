@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
+import { useCallback, useMemo, useState } from 'preact/hooks'
 import { useSetAtom } from 'jotai'
 import Button from 'components/Button'
 import ButtonTypes from 'types/Button'
@@ -7,9 +7,9 @@ import HumanIcon from 'components/Icons/HumanIcon'
 import Patient from 'types/Patient'
 import handleError from 'helpers/handleError'
 import nameToDataStore from 'atoms/patientsDataStore'
-import { read, utils } from 'xlsx'
 import patientsDataStore from 'atoms/patientsDataStore'
 import importXlsxPatient from 'helpers/importXlsxPatient'
+import { v4 } from 'uuid'
 
 function AddPatientForm() {
   const [historySerial, setHistorySerial] = useState<number | undefined>()
@@ -28,7 +28,7 @@ function AddPatientForm() {
 
     setPatientsData((prevData) => ({
       ...prevData,
-      [crypto.randomUUID()]: new Patient(historySerial),
+      [v4()]: new Patient(historySerial),
     }))
 
     clearData()
@@ -81,7 +81,7 @@ function ImportPatient() {
   const onClick = useCallback(() => {
     if (!parsedResult) return
 
-    const rand = crypto.randomUUID()
+    const rand = v4()
     console.log(rand)
 
     setPatients((prev) => ({

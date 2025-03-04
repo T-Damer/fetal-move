@@ -3,9 +3,10 @@ import { useHashLocation } from 'wouter-preact/use-hash-location'
 import Card from 'components/Card'
 import Button from 'components/Button'
 import patientsDataStore from 'atoms/patientsDataStore'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 import handleError from 'helpers/handleError'
 import scrollTop from 'helpers/scrollTop'
+import { v4 } from 'uuid'
 
 export default function ({
   id,
@@ -33,7 +34,7 @@ export default function ({
 
     setPatients((prev) => ({
       ...prev,
-      [crypto.randomUUID()]: currentPatient,
+      [v4()]: currentPatient,
     }))
   }, [patients])
 
