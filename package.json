@@ -1,9 +1,9 @@
 {
-  "name": "birth-history",
+  "name": "fetal-move",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
-  "homepage": "https://t-damer.github.io/birth-history/",
+  "homepage": "https://t-damer.github.io/fetal-move/",
   "scripts": {
     "start": "vite",
     "build": "cross-env NODE_ENV=production tsc && vite build",

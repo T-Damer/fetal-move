@@ -10,7 +10,7 @@ export default function () {
 
   return (
     <div>
-      <h1>🍼 Birth history</h1>
+      <h1>🤰 Fet</h1>
       <SearchBar search={search} setSearch={setSearch} />
       <div className="flex flex-wrap" ref={parentRef}>
         <CreatePatientCard />

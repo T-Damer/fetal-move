@@ -24,6 +24,6 @@ export default defineConfig(() => {
       },
       outDir: 'dist',
     },
-    base: '/birth-history/',
+    base: '/fetal-move/',
   }
 })
