@@ -40,7 +40,7 @@ export default function () {
         <ErrorBoundary fallback={<ErrorFallback />}>
           <Switch>
             <Route
-              path="/patient/:id"
+              path="/record/:id"
               component={({ params }: { params: { id: string } }) => (
                 <DetailsPage {...params} />
               )}

@@ -1,23 +1,19 @@
-import Patient, { CommonContent } from 'types/Patient'
+import Recording from 'types/Recording'
 
 // before converting we need only: title and value, no need for header, keys and stuff
 // Store as:
 // title1, title2
 // value1, value2
 
-export default function (dataObjToWrite: Patient) {
+export default function (dataObjToWrite: Recording[]) {
   // parse like this:
   const titles: string[] = []
   const values: string[] = []
 
-  Object.keys(dataObjToWrite).forEach((headerId) => {
-    Object.values(dataObjToWrite[headerId as keyof Patient]).forEach((data) => {
-      const { title, value } = data as CommonContent
-      if (!title) return
-      const safeValue = value === undefined ? '-' : String(value)
-
-      titles.push(title)
-      values.push(String(safeValue))
+  dataObjToWrite.forEach((record) => {
+    Object.entries(record).forEach(([key, value]) => {
+      titles.push(key)
+      values.push(value)
     })
   })
 

@@ -14,8 +14,8 @@ Overview:
 1. Install [`nvm`](https://github.com/nvm-sh/nvm) (or [windows version](https://github.com/coreybutler/nvm-windows))
 2. Install node.js through nvm using `nvm install lts` in your cli
 3. Install `yarn` via `npm i -g yarn`
-4. Clone this repo vai `git clone https://github.com/T-Damer/birth-history.git` (install [git](https://git-scm.com/) if needed)
-5. Go to the folder via `cd birth-history`
+4. Clone this repo vai `git clone https://github.com/T-Damer/fetal-move.git` (install [git](https://git-scm.com/) if needed)
+5. Go to the folder via `cd fetal-move`
 6. Install dependencies with `yarn`
 7. Run the server with `yarn start`
 8. Open the link from cli

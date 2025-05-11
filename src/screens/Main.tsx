@@ -1,7 +1,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/preact'
 import { useState } from 'preact/hooks'
-import CreatePatientCard from 'components/PatientsCards/CreatePatientCard'
-import PatientCardList from 'components/PatientsCards/PatientCardList'
+import CreatePatientCard from 'components/Recordings/StartRecording'
+import PatientCardList from 'components/Recordings/RecordsHistoryList'
 import SearchBar from 'components/SearchBar'
 
 export default function () {

@@ -13,7 +13,7 @@ export default function ({
       <input
         type="text"
         className="grow"
-        placeholder="Поиск по номеру истории"
+        placeholder="Поиск по дате"
         value={search}
         onInput={(e) => setSearch(e.currentTarget.value)}
       />
